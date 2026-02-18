@@ -1,73 +1,109 @@
-# Welcome to your Lovable project
+🌿 The Green Path
+Least-Pollution Route Finder
 
-## Project info
+📌 Problem Statement
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+Urban areas like Lucknow face drastic Air Quality Index (AQI) variations across different locations. Current navigation apps optimize for time and distance, but not for health impact.
 
-## How can I edit this code?
+This project aims to provide the "Cleanest Route" between two points by minimizing exposure to harmful pollutants such as PM2.5.
 
-There are several ways of editing your application.
 
-**Use Lovable**
+🎯 Objective
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+To develop a web/app-based solution that suggests routes prioritizing health over speed, by calculating a Health Score for each possible route.
 
-Changes made via Lovable will be committed automatically to this repo.
+🚀 Key Features:-  
 
-**Use your preferred IDE**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+🌍 Cleanest route suggestion between two points
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+📊 Health Score calculation for each route
 
-Follow these steps:
+🚦 Real-time traffic congestion analysis
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+🏗️ Construction zone detection
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+🏭 Industrial area proximity analysis
 
-# Step 3: Install the necessary dependencies.
-npm i
+📍 Location-specific optimization (Lucknow-based model)
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+🟢 Simple output comparison
 
-**Edit a file directly in GitHub**
+Route A – 20 mins (High Pollution)
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Route B – 25 mins (Low Pollution)
 
-**Use GitHub Codespaces**
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
 
-## What technologies are used for this project?
 
-This project is built with:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+🧠 How It Works
 
-## How can I deploy this project?
+The system evaluates multiple route options and assigns a Health Score based on:
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+Real-time AQI data
 
-## Can I connect a custom domain to my Lovable project?
+Traffic congestion levels
 
-Yes, you can!
+Presence of construction zones
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Proximity to industrial areas
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Local environmental conditions
+
+The route with the lowest pollution exposure is recommended.
+
+
+
+
+📊 Data Sources
+
+CPCB (Central Pollution Control Board) data
+
+OpenStreetMap
+
+Traffic APIs (Google / Open APIs)
+
+Public environmental datasets
+
+
+
+
+🛠️ Tech Stack (Example)
+
+Frontend: HTML, CSS, JavaScript / React
+
+Backend: Node.js / Python
+
+Maps API: Google Maps / OpenStreetMap
+
+AQI API Integration
+
+Dijkstra / A* Algorithm for optimized routing
+
+
+
+
+🧮 Algorithm Approach
+
+Fetch multiple route options
+
+Assign pollution weight to each route segment
+
+Calculate cumulative Health Score
+
+Compare routes
+
+Suggest least polluted path
+
+
+
+🌟 Impact
+
+Reduces public exposure to harmful pollutants
+
+Promotes health-first navigation
+
+Supports smart city initiatives
+
+Encourages data-driven urban mobility
