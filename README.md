@@ -1,8 +1,19 @@
 # 🌿 The Healthy Path
 
-A health-first route planner for Lucknow that suggests the cleanest travel path instead of the fastest one. It compares route options using AQI, traffic intensity, and pollution-prone zones to help users reduce exposure to harmful air pollutants.
+<p align="center">
+  <strong>Health-first route planning for cleaner and safer travel in Lucknow.</strong>
+</p>
 
-Live Demo: https://the-healthy-path.vercel.app/
+<p align="center">
+  <a href="https://the-healthy-path.vercel.app/">
+    <img src="https://img.shields.io/badge/🌐%20Live%20Demo-Visit%20The%20Healthy%20Path-16a085?style=for-the-badge" alt="Visit the live demo" />
+  </a>
+  <a href="https://github.com/Sanjeet3065/The-Healthy-Path">
+    <img src="https://img.shields.io/badge/⭐%20GitHub-View%20Repository-24292f?style=for-the-badge&logo=github" alt="View GitHub repository" />
+  </a>
+</p>
+
+The Healthy Path is a health-first route planner for Lucknow that suggests cleaner travel paths instead of simply choosing the fastest route. It compares route options using AQI, traffic intensity, and pollution-prone zones to help users reduce exposure to harmful air pollutants.
 
 ## Why this project?
 
@@ -23,11 +34,11 @@ The Healthy Path helps users choose routes that minimize exposure to:
 - Lucknow-specific pollution data model
 - Traffic and environmental risk indicators
 - Clear route ranking: Best, Moderate, or Avoid
-- Modern UI built with React + Vite + Tailwind
+- Modern UI built with React, Vite, and Tailwind CSS
 
 ## How it works
 
-1. The user selects a source and destination inside Lucknow.
+1. Select a source and destination inside Lucknow.
 2. The app evaluates multiple route options.
 3. Each route is scored based on pollution exposure factors.
 4. The route with the lowest health risk is recommended.
@@ -44,24 +55,6 @@ This creates a smarter travel decision: not just the shortest route, but the saf
 - Lucide Icons
 - React Router
 - TanStack Query
-
-## Project Structure
-
-```bash
-.
-├── src/
-│   ├── components/
-│   ├── lib/
-│   ├── pages/
-│   ├── App.tsx
-│   └── main.tsx
-├── public/
-├── package.json
-├── vite.config.ts
-├── tsconfig.json
-├── tailwind.config.ts
-└── README.md
-```
 
 ## Getting Started
 
@@ -94,30 +87,19 @@ npm run build
 
 ## Data Model
 
-The app uses a Lucknow-focused pollution simulation with route scores based on:
+The app uses a Lucknow-focused pollution simulation with route scores based on AQI levels, pollution zones, traffic density, construction activity, and industrial proximity.
 
-- AQI levels across areas
-- Moderate and severe pollution zones
-- Traffic density and congestion
-- Construction activity and industrial proximity
-
-## Use Case
-
-This project is useful for:
+## Use Cases
 
 - Daily commuters
 - Students and office travelers
 - Health-conscious riders
 - Smart city and environmental awareness initiatives
 
-## Impact
-
-The Healthy Path aims to support cleaner urban mobility by encouraging travel decisions that prioritize health, especially in cities where air pollution is a daily risk.
-
 ## Note
 
-This project is designed as a frontend-based prototype and demonstrates a health-first routing concept using curated Lucknow area data and route simulation logic.
+This project is a frontend-based prototype that demonstrates a health-first routing concept using curated Lucknow area data and route simulation logic.
 
 ---
 
-Built with care for cleaner, healthier commuting in Lucknow. 🌱
+<p align="center">Built with care for cleaner, healthier commuting in Lucknow. 🌱</p>
