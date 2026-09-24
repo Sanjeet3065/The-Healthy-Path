@@ -1,109 +1,123 @@
-🌿 The Green Path
-Least-Pollution Route Finder
+# 🌿 The Healthy Path
 
-📌 Problem Statement
+A health-first route planner for Lucknow that suggests the cleanest travel path instead of the fastest one. It compares route options using AQI, traffic intensity, and pollution-prone zones to help users reduce exposure to harmful air pollutants.
 
-Urban areas like Lucknow face drastic Air Quality Index (AQI) variations across different locations. Current navigation apps optimize for time and distance, but not for health impact.
+Live Demo: https://the-healthy-path.vercel.app/
 
-This project aims to provide the "Cleanest Route" between two points by minimizing exposure to harmful pollutants such as PM2.5.
+## Why this project?
 
+Most navigation apps optimize for distance and time. But in polluted urban areas, the fastest route can also be the most harmful route.
 
-🎯 Objective
+The Healthy Path helps users choose routes that minimize exposure to:
 
-To develop a web/app-based solution that suggests routes prioritizing health over speed, by calculating a Health Score for each possible route.
+- PM2.5 and airborne pollutants
+- High-AQI zones
+- Congested and pollution-heavy corridors
+- Industrial and construction-heavy areas
 
-🚀 Key Features:-  
+## Key Features
 
+- Cleanest route recommendations between two locations
+- Health score comparison for each route
+- AQI-aware route evaluation
+- Lucknow-specific pollution data model
+- Traffic and environmental risk indicators
+- Clear route ranking: Best, Moderate, or Avoid
+- Modern UI built with React + Vite + Tailwind
 
-🌍 Cleanest route suggestion between two points
+## How it works
 
-📊 Health Score calculation for each route
+1. The user selects a source and destination inside Lucknow.
+2. The app evaluates multiple route options.
+3. Each route is scored based on pollution exposure factors.
+4. The route with the lowest health risk is recommended.
 
-🚦 Real-time traffic congestion analysis
+This creates a smarter travel decision: not just the shortest route, but the safest and healthiest route.
 
-🏗️ Construction zone detection
+## Tech Stack
 
-🏭 Industrial area proximity analysis
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui
+- Lucide Icons
+- React Router
+- TanStack Query
 
-📍 Location-specific optimization (Lucknow-based model)
+## Project Structure
 
-🟢 Simple output comparison
+```bash
+.
+├── src/
+│   ├── components/
+│   ├── lib/
+│   ├── pages/
+│   ├── App.tsx
+│   └── main.tsx
+├── public/
+├── package.json
+├── vite.config.ts
+├── tsconfig.json
+├── tailwind.config.ts
+└── README.md
+```
 
-Route A – 20 mins (High Pollution)
+## Getting Started
 
-Route B – 25 mins (Low Pollution)
+### Prerequisites
 
+- Node.js 18+
+- npm
 
+### Installation
 
+```bash
+git clone https://github.com/Sanjeet3065/The-Healthy-Path.git
+cd The-Healthy-Path
+npm install
+```
 
+### Run locally
 
-🧠 How It Works
+```bash
+npm run dev
+```
 
-The system evaluates multiple route options and assigns a Health Score based on:
+Then open the local Vite URL shown in the terminal.
 
-Real-time AQI data
+### Build for production
 
-Traffic congestion levels
+```bash
+npm run build
+```
 
-Presence of construction zones
+## Data Model
 
-Proximity to industrial areas
+The app uses a Lucknow-focused pollution simulation with route scores based on:
 
-Local environmental conditions
+- AQI levels across areas
+- Moderate and severe pollution zones
+- Traffic density and congestion
+- Construction activity and industrial proximity
 
-The route with the lowest pollution exposure is recommended.
+## Use Case
 
+This project is useful for:
 
+- Daily commuters
+- Students and office travelers
+- Health-conscious riders
+- Smart city and environmental awareness initiatives
 
+## Impact
 
-📊 Data Sources
+The Healthy Path aims to support cleaner urban mobility by encouraging travel decisions that prioritize health, especially in cities where air pollution is a daily risk.
 
-CPCB (Central Pollution Control Board) data
+## Note
 
-OpenStreetMap
+This project is designed as a frontend-based prototype and demonstrates a health-first routing concept using curated Lucknow area data and route simulation logic.
 
-Traffic APIs (Google / Open APIs)
+---
 
-Public environmental datasets
-
-
-
-
-🛠️ Tech Stack (Example)
-
-Frontend: HTML, CSS, JavaScript / React
-
-Backend: Node.js / Python
-
-Maps API: Google Maps / OpenStreetMap
-
-AQI API Integration
-
-Dijkstra / A* Algorithm for optimized routing
-
-
-
-
-🧮 Algorithm Approach
-
-Fetch multiple route options
-
-Assign pollution weight to each route segment
-
-Calculate cumulative Health Score
-
-Compare routes
-
-Suggest least polluted path
-
-
-
-🌟 Impact
-
-Reduces public exposure to harmful pollutants
-
-Promotes health-first navigation
-
-Supports smart city initiatives
-
-Encourages data-driven urban mobility
+Built with care for cleaner, healthier commuting in Lucknow. 🌱
