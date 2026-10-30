@@ -25,16 +25,16 @@ export default function Footer({ onSelectCorridor }: FooterProps) {
   };
 
   return (
-    <footer className="border-t border-slate-200/80 bg-white text-slate-600 mt-12">
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+    <footer className="border-t border-slate-200/80 bg-white text-slate-600 mt-8 sm:mt-12">
+      <div className="container mx-auto px-3.5 sm:px-4 py-6 sm:py-8">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-start">
           {/* Brand & Purpose (5 cols) */}
           <div className="md:col-span-5 space-y-2.5">
             <div className="flex items-center gap-2">
               <div className="w-7 h-7 rounded-lg bg-emerald-700 flex items-center justify-center text-white shadow-xs">
                 <Leaf className="h-4 w-4" />
               </div>
-              <span className="font-display font-bold text-base text-slate-900 tracking-tight">
+              <span className="font-display font-bold text-sm sm:text-base text-slate-900 tracking-tight">
                 The Healthy Path
               </span>
               <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
@@ -57,7 +57,7 @@ export default function Footer({ onSelectCorridor }: FooterProps) {
             <span className="text-[11px] font-bold uppercase tracking-wider text-slate-900 block">
               Popular Travel Corridors
             </span>
-            <div className="grid grid-cols-2 gap-1.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
               {quickCorridors.map((c) => (
                 <button
                   key={`${c.from}-${c.to}`}

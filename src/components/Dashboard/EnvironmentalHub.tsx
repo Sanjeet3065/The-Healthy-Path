@@ -70,42 +70,42 @@ export default function EnvironmentalHub({ onSelectCity }: EnvironmentalHubProps
   return (
     <div className="bg-white rounded-xl border border-slate-200/80 shadow-soft overflow-hidden">
       {/* Sleek Minimalist Tab Header */}
-      <div className="border-b border-slate-100 px-5 py-3 flex flex-wrap items-center justify-between gap-3 bg-slate-50/50">
-        <div className="flex items-center gap-1.5 p-1 rounded-lg bg-slate-200/60 text-xs font-semibold">
+      <div className="border-b border-slate-100 px-3.5 sm:px-5 py-2.5 sm:py-3 flex flex-wrap items-center justify-between gap-2.5 bg-slate-50/50">
+        <div className="flex items-center gap-1 p-1 rounded-lg bg-slate-200/60 text-xs font-semibold overflow-x-auto w-full sm:w-auto scrollbar-none">
           <button
             onClick={() => setActiveTab('live_aqi')}
-            className={`px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 ${
+            className={`px-2.5 sm:px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap text-[11px] sm:text-xs ${
               activeTab === 'live_aqi'
-                ? 'bg-white text-slate-900 shadow-sm'
+                ? 'bg-white text-slate-900 shadow-xs'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            <Wind className="h-3.5 w-3.5 text-emerald-600" />
-            <span>Live UP Air Quality</span>
+            <Wind className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+            <span>Live <span className="hidden sm:inline">UP </span>Air Quality</span>
           </button>
 
           <button
             onClick={() => setActiveTab('methodology')}
-            className={`px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 ${
+            className={`px-2.5 sm:px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap text-[11px] sm:text-xs ${
               activeTab === 'methodology'
-                ? 'bg-white text-slate-900 shadow-sm'
+                ? 'bg-white text-slate-900 shadow-xs'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            <Calculator className="h-3.5 w-3.5 text-emerald-600" />
-            <span>How Exposure is Calculated</span>
+            <Calculator className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+            <span><span className="hidden sm:inline">How It's </span>Calculated</span>
           </button>
 
           <button
             onClick={() => setActiveTab('standards')}
-            className={`px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 ${
+            className={`px-2.5 sm:px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap text-[11px] sm:text-xs ${
               activeTab === 'standards'
-                ? 'bg-white text-slate-900 shadow-sm'
+                ? 'bg-white text-slate-900 shadow-xs'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            <Shield className="h-3.5 w-3.5 text-emerald-600" />
-            <span>NAQI Standards & Health</span>
+            <Shield className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+            <span>NAQI <span className="hidden sm:inline">Standards</span></span>
           </button>
         </div>
 
@@ -114,7 +114,7 @@ export default function EnvironmentalHub({ onSelectCity }: EnvironmentalHubProps
             onClick={loadData}
             disabled={isLoading}
             title="Refresh Live Data"
-            className="flex items-center gap-1 text-[11px] font-medium text-slate-500 hover:text-emerald-700 transition-colors"
+            className="flex items-center gap-1 text-[11px] font-medium text-slate-500 hover:text-emerald-700 transition-colors ml-auto sm:ml-0"
           >
             <RefreshCw className={`h-3 w-3 ${isLoading ? 'animate-spin' : ''}`} />
             <span>Refresh</span>
@@ -124,21 +124,21 @@ export default function EnvironmentalHub({ onSelectCity }: EnvironmentalHubProps
 
       {/* Tab 1: Live UP Air Quality Grid */}
       {activeTab === 'live_aqi' && (
-        <div className="p-5 md:p-6">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="p-3.5 sm:p-5 md:p-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
             {snapshots.map((city) => (
               <div
                 key={city.cityName}
                 onClick={() => handleCityClick(city)}
-                className="group p-3 rounded-lg border border-slate-100 bg-slate-50/50 hover:bg-white hover:border-emerald-300 hover:shadow-soft transition-all cursor-pointer"
+                className="group p-2.5 sm:p-3 rounded-lg border border-slate-100 bg-slate-50/50 hover:bg-white hover:border-emerald-300 hover:shadow-soft transition-all cursor-pointer"
               >
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-bold text-slate-800 flex items-center gap-1">
-                    <Building2 className="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-600" />
-                    {city.cityName}
+                  <span className="text-[11px] sm:text-xs font-bold text-slate-800 flex items-center gap-1 truncate">
+                    <Building2 className="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-600 shrink-0" />
+                    <span className="truncate">{city.cityName}</span>
                   </span>
                   <span
-                    className={`text-[9px] font-bold px-1.5 py-0.5 rounded ${getCategoryBadgeClass(
+                    className={`text-[9px] font-bold px-1.5 py-0.5 rounded shrink-0 ${getCategoryBadgeClass(
                       city.category
                     )}`}
                   >
@@ -148,17 +148,17 @@ export default function EnvironmentalHub({ onSelectCity }: EnvironmentalHubProps
 
                 <div className="flex items-baseline justify-between mt-1">
                   <div>
-                    <span className="text-base font-extrabold text-slate-900">{city.aqi}</span>
-                    <span className="text-[10px] text-slate-400 ml-1">AQI</span>
+                    <span className="text-sm sm:text-base font-extrabold text-slate-900">{city.aqi}</span>
+                    <span className="text-[9px] sm:text-[10px] text-slate-400 ml-1">AQI</span>
                   </div>
-                  <span className="text-[11px] text-slate-500">
+                  <span className="text-[10px] sm:text-[11px] text-slate-500 truncate">
                     PM2.5: <strong className="text-slate-800">{city.pm25}</strong>
                   </span>
                 </div>
               </div>
             ))}
           </div>
-          <p className="text-[11px] text-slate-400 text-right mt-3">
+          <p className="text-[10px] sm:text-[11px] text-slate-400 text-center sm:text-right mt-3">
             Copernicus CAMS & Open-Meteo Atmospheric Reanalysis • Click city to route
           </p>
         </div>

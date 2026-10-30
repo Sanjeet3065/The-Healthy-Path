@@ -80,7 +80,7 @@ export default function RouteComparisonPanel({
       {/* Recommended Route Card (Cleanest Path) */}
       <div
         onClick={() => onSelectRoute(recommendedRoute.id)}
-        className={`rounded-xl border p-4 sm:p-5 transition-all cursor-pointer ${
+        className={`rounded-xl border p-3.5 sm:p-5 transition-all cursor-pointer ${
           selectedRouteId === recommendedRoute.id
             ? 'border-emerald-600 bg-emerald-50/20 ring-1 ring-emerald-600 shadow-sm'
             : 'border-slate-200 bg-white hover:border-emerald-300 shadow-soft'
@@ -88,71 +88,71 @@ export default function RouteComparisonPanel({
       >
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-600" />
-            <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-800">
+            <span className="w-2 h-2 rounded-full bg-emerald-600 shrink-0" />
+            <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-emerald-800">
               Cleanest Path
             </span>
           </div>
 
-          <span className="text-xs font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200/60">
-            Health Score {recommendedRoute.pollution.healthScore}/100
+          <span className="text-[11px] sm:text-xs font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200/60">
+            Score {recommendedRoute.pollution.healthScore}/100
           </span>
         </div>
 
-        <h3 className="text-base font-bold text-slate-900">{recommendedRoute.name}</h3>
-        <p className="text-xs text-slate-500 mb-3">{recommendedRoute.summary}</p>
+        <h3 className="text-sm sm:text-base font-bold text-slate-900 leading-snug">{recommendedRoute.name}</h3>
+        <p className="text-[11px] sm:text-xs text-slate-500 mb-2.5 sm:mb-3">{recommendedRoute.summary}</p>
 
-        {/* Minimalist Metrics Strip */}
-        <div className="grid grid-cols-4 gap-2 py-2.5 px-3 rounded-lg bg-slate-50 border border-slate-100 text-center">
+        {/* Responsive Metrics Strip */}
+        <div className="grid grid-cols-4 gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 rounded-lg bg-slate-50 border border-slate-100 text-center">
           <div>
-            <span className="text-[10px] text-slate-400 block">Duration</span>
-            <span className="text-xs font-bold text-slate-800">
+            <span className="text-[9px] sm:text-[10px] text-slate-400 block truncate">Duration</span>
+            <span className="text-[11px] sm:text-xs font-bold text-slate-800">
               {recommendedRoute.durationMins}m
             </span>
           </div>
           <div>
-            <span className="text-[10px] text-slate-400 block">Distance</span>
-            <span className="text-xs font-bold text-slate-800">
+            <span className="text-[9px] sm:text-[10px] text-slate-400 block truncate">Distance</span>
+            <span className="text-[11px] sm:text-xs font-bold text-slate-800">
               {recommendedRoute.distanceKm}km
             </span>
           </div>
           <div>
-            <span className="text-[10px] text-slate-400 block">Avg AQI</span>
-            <span className="text-xs font-bold text-emerald-700">
+            <span className="text-[9px] sm:text-[10px] text-slate-400 block truncate">Avg AQI</span>
+            <span className="text-[11px] sm:text-xs font-bold text-emerald-700">
               {recommendedRoute.pollution.avgAqi}
             </span>
           </div>
           <div>
-            <span className="text-[10px] text-slate-400 block">PM2.5</span>
-            <span className="text-xs font-bold text-slate-800">
+            <span className="text-[9px] sm:text-[10px] text-slate-400 block truncate">PM2.5</span>
+            <span className="text-[11px] sm:text-xs font-bold text-slate-800">
               {recommendedRoute.pollution.avgPm25}
             </span>
           </div>
         </div>
 
         {/* Scientific Recommendation Reason */}
-        <p className="mt-2.5 text-xs text-emerald-900 bg-emerald-50/60 px-3 py-2 rounded-md border border-emerald-100/80 leading-relaxed">
+        <p className="mt-2.5 text-[11px] sm:text-xs text-emerald-900 bg-emerald-50/60 px-2.5 sm:px-3 py-2 rounded-md border border-emerald-100/80 leading-relaxed">
           {recommendedRoute.pollution.recommendationReason}
         </p>
 
         {/* Travel Mode Exposure Advice */}
         {recommendedRoute.pollution.travelModeAdvice && (
-          <div className="mt-2 text-xs text-slate-700 bg-slate-50 px-3 py-2 rounded-md border border-slate-200/70 flex items-start gap-2">
-            <Info className="h-4 w-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+          <div className="mt-2 text-[11px] sm:text-xs text-slate-700 bg-slate-50 px-2.5 sm:px-3 py-2 rounded-md border border-slate-200/70 flex items-start gap-2">
+            <Info className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-emerald-600 shrink-0 mt-0.5" />
             <span className="leading-snug">{recommendedRoute.pollution.travelModeAdvice}</span>
           </div>
         )}
 
         {/* Action: Open in Google Maps */}
         {originName && destinationName && (
-          <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between">
-            <span className="text-[11px] text-slate-500">Live Navigation</span>
+          <div className="mt-3 pt-3 border-t border-slate-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2">
+            <span className="text-[11px] text-slate-500 hidden sm:inline">Live Navigation</span>
             <a
               href={`https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(originName)}&destination=${encodeURIComponent(destinationName)}`}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold shadow-2xs transition-colors"
+              className="inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-md bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold shadow-2xs transition-colors"
             >
               <Navigation className="h-3.5 w-3.5" />
               <span>Open in Google Maps</span>

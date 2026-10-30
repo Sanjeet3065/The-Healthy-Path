@@ -40,6 +40,7 @@ export default function InteractiveMap({
   const samplesLayerRef = useRef<L.LayerGroup | null>(null);
 
   const [activeBaseLayer, setActiveBaseLayer] = useState<'osm' | 'esri_street' | 'satellite'>('osm');
+  const [showLegend, setShowLegend] = useState(false);
 
   // Switch base map tiles
   const switchBaseLayer = (layerType: 'osm' | 'esri_street' | 'satellite') => {
@@ -97,12 +98,13 @@ export default function InteractiveMap({
   useEffect(() => {
     if (!mapContainerRef.current || mapInstanceRef.current) return;
 
-    // Create Leaflet map instance
+    // Create Leaflet map instance with touch and wheel optimizations
     const map = L.map(mapContainerRef.current, {
       center: UP_CENTER,
       zoom: UP_DEFAULT_ZOOM,
       zoomControl: false,
       attributionControl: true,
+      scrollWheelZoom: false, // Prevents mobile and trackpad scroll trap
     });
 
     // Default: OpenStreetMap standard with full place names, towns, roads, villages
@@ -114,8 +116,8 @@ export default function InteractiveMap({
     osmLayer.addTo(map);
     currentTileLayerRef.current = osmLayer;
 
-    // Zoom control in top right
-    L.control.zoom({ position: 'topright' }).addTo(map);
+    // Zoom control at bottomleft to prevent collision with top mobile controls
+    L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
     // Create layer groups
     const boundaryLayer = L.geoJSON(upBoundaryData as any, {
@@ -362,80 +364,105 @@ export default function InteractiveMap({
   };
 
   return (
-    <div className="relative w-full h-[520px] md:h-[620px] rounded-xl overflow-hidden border border-slate-200/80 bg-slate-100 shadow-soft">
+    <div className="relative w-full h-[360px] sm:h-[460px] md:h-[520px] lg:h-[620px] rounded-xl overflow-hidden border border-slate-200/80 bg-slate-100 shadow-soft">
       {/* Map DOM Container */}
       <div ref={mapContainerRef} className="w-full h-full" />
 
       {/* Floating Indicator (Top Left) */}
-      <div className="absolute top-3 left-3 z-[400] flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/90 backdrop-blur-sm border border-slate-200/80 shadow-sm text-[11px] font-semibold text-slate-800">
-        <span className="w-2 h-2 rounded-full bg-emerald-600" />
+      <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-[400] flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded-md bg-white/95 backdrop-blur-sm border border-slate-200/80 shadow-xs text-[10px] sm:text-[11px] font-semibold text-slate-800">
+        <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
         <span>Uttar Pradesh</span>
       </div>
 
       {/* Floating Map Controls & Layer Switcher (Top Right) */}
-      <div className="absolute top-3 right-14 z-[400] flex items-center gap-1.5">
-        <div className="flex items-center rounded-lg bg-white/95 border border-slate-200 shadow-sm p-0.5 text-xs">
+      <div className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-[400] flex items-center gap-1 sm:gap-1.5">
+        <div className="flex items-center rounded-lg bg-white/95 border border-slate-200 shadow-xs p-0.5 text-[11px] sm:text-xs">
           <button
             onClick={() => switchBaseLayer('osm')}
-            className={`px-2.5 py-1 rounded-md font-semibold transition-all ${
+            className={`px-2 sm:px-2.5 py-1 rounded-md font-semibold transition-all ${
               activeBaseLayer === 'osm'
-                ? 'bg-emerald-700 text-white shadow-sm'
+                ? 'bg-emerald-700 text-white shadow-xs'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            Street Map
+            Street<span className="hidden sm:inline"> Map</span>
           </button>
           <button
             onClick={() => switchBaseLayer('satellite')}
-            className={`px-2.5 py-1 rounded-md font-semibold transition-all ${
+            className={`px-2 sm:px-2.5 py-1 rounded-md font-semibold transition-all ${
               activeBaseLayer === 'satellite'
-                ? 'bg-emerald-700 text-white shadow-sm'
+                ? 'bg-emerald-700 text-white shadow-xs'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            Satellite
+            Sat<span className="hidden sm:inline">ellite</span>
           </button>
         </div>
 
         <button
           onClick={handleFitRoute}
           disabled={routes.length === 0}
-          title="Fit Route"
-          className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-white/95 text-slate-700 border border-slate-200 shadow-sm text-xs font-medium hover:bg-slate-50 disabled:opacity-40 transition-colors"
+          title="Fit Route Bounds"
+          className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-lg bg-white/95 text-slate-700 border border-slate-200 shadow-xs text-xs font-medium hover:bg-slate-50 disabled:opacity-40 transition-colors"
         >
           <Maximize2 className="h-3.5 w-3.5 text-slate-600" />
-          <span className="hidden sm:inline">Fit</span>
+          <span className="hidden md:inline">Fit</span>
         </button>
 
         <button
           onClick={handleResetToUP}
-          title="Reset View"
-          className="p-1.5 rounded-lg bg-white/95 text-slate-700 border border-slate-200 shadow-sm text-xs hover:bg-slate-50 transition-colors"
+          title="Reset to UP View"
+          className="p-1.5 rounded-lg bg-white/95 text-slate-700 border border-slate-200 shadow-xs text-xs hover:bg-slate-50 transition-colors"
         >
           <RotateCcw className="h-3.5 w-3.5 text-slate-600" />
         </button>
       </div>
 
-      {/* Floating Map Legend (Bottom Right) */}
-      <div className="absolute bottom-3 right-3 z-[400] p-3 rounded-lg bg-white/95 backdrop-blur-sm border border-slate-200 shadow-sm text-xs text-slate-700 max-w-[220px]">
-        <div className="font-semibold text-slate-900 mb-2 flex items-center gap-1.5">
-          <Info className="h-3.5 w-3.5 text-emerald-600" />
-          <span>Map Legend</span>
-        </div>
-        <div className="space-y-1.5">
-          <div className="flex items-center gap-2">
-            <span className="w-4 h-1 rounded-full bg-emerald-600" />
-            <span className="text-[11px]">Recommended Clean Path</span>
+      {/* Responsive Floating Map Legend (Bottom Right) */}
+      <div className="absolute bottom-2.5 right-2.5 sm:bottom-3 sm:right-3 z-[400] text-xs">
+        {/* Mobile Toggle Button */}
+        <button
+          type="button"
+          onClick={() => setShowLegend(!showLegend)}
+          className="sm:hidden px-2.5 py-1.5 rounded-lg bg-white/95 border border-slate-200 shadow-xs text-[11px] font-semibold text-slate-700 flex items-center gap-1"
+        >
+          <Info className="h-3 w-3 text-emerald-600" />
+          <span>Legend</span>
+        </button>
+
+        {/* Legend Box: Always visible on tablet/desktop, toggleable on phone */}
+        <div
+          className={`${
+            showLegend ? 'block' : 'hidden'
+          } sm:block mt-1 sm:mt-0 p-2.5 sm:p-3 rounded-lg bg-white/95 backdrop-blur-sm border border-slate-200 shadow-soft text-slate-700 max-w-[200px] sm:max-w-[220px] transition-all`}
+        >
+          <div className="font-semibold text-slate-900 mb-1.5 flex items-center justify-between">
+            <div className="flex items-center gap-1.5">
+              <Info className="h-3.5 w-3.5 text-emerald-600" />
+              <span className="text-[11px] sm:text-xs">Map Legend</span>
+            </div>
+            <button
+              onClick={() => setShowLegend(false)}
+              className="sm:hidden text-slate-400 hover:text-slate-600 text-[10px]"
+            >
+              ✕
+            </button>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="w-4 h-1 rounded-full bg-slate-500" />
-            <span className="text-[11px]">Alternative Route</span>
-          </div>
-          <div className="flex items-center gap-2 pt-1 border-t border-slate-100">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-            <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-            <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
-            <span className="text-[11px] text-slate-500">Sampled AQI Dots</span>
+          <div className="space-y-1 sm:space-y-1.5 text-[10px] sm:text-[11px]">
+            <div className="flex items-center gap-1.5">
+              <span className="w-3.5 h-1 rounded-full bg-emerald-600 shrink-0" />
+              <span>Cleanest Route</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-3.5 h-1 rounded-full bg-slate-500 shrink-0" />
+              <span>Alternative Path</span>
+            </div>
+            <div className="flex items-center gap-1.5 pt-1 border-t border-slate-100">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
+              <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0" />
+              <span className="w-2 h-2 rounded-full bg-red-500 shrink-0" />
+              <span className="text-slate-500">Sampled AQI Dots</span>
+            </div>
           </div>
         </div>
       </div>

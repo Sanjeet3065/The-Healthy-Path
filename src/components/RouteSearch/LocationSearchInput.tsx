@@ -201,63 +201,63 @@ export default function LocationSearchInput({
     origin.id !== destination.id;
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200/80 p-5 shadow-soft">
+    <div className="bg-white rounded-xl border border-slate-200/80 p-3.5 sm:p-5 shadow-soft">
       <div className="flex items-center justify-between mb-3">
         <h2 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
           <Compass className="h-4 w-4 text-emerald-600" />
           <span>Plan Route</span>
         </h2>
-        <span className="text-xs text-slate-400">Uttar Pradesh</span>
+        <span className="text-[11px] sm:text-xs text-slate-400">Uttar Pradesh</span>
       </div>
 
       {/* Travel Mode Selector (Feature: Commuter Calibration) */}
-      <div className="mb-4 p-1.5 rounded-lg bg-slate-50 border border-slate-200/80">
+      <div className="mb-3.5 p-1.5 rounded-lg bg-slate-50 border border-slate-200/80">
         <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider px-1 mb-1 flex items-center justify-between">
           <span>Travel Mode</span>
-          <span className="text-[10px] text-slate-500 font-normal">Calibrates Particulate Inhalation</span>
+          <span className="text-[10px] text-slate-500 font-normal hidden sm:inline">Calibrates Inhalation</span>
         </div>
         <div className="grid grid-cols-3 gap-1">
           <button
             type="button"
             onClick={() => onSelectTravelMode?.('car')}
-            className={`py-1.5 px-2 rounded-md text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
+            className={`py-1.5 px-1 sm:px-2 rounded-md text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 sm:gap-1.5 transition-all ${
               travelMode === 'car'
                 ? 'bg-white text-emerald-800 shadow-xs border border-emerald-300 font-bold'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 border border-transparent'
             }`}
           >
-            <Car className="h-3.5 w-3.5" />
-            <span>Car / Cab</span>
+            <Car className="h-3.5 w-3.5 shrink-0" />
+            <span>Car<span className="hidden sm:inline"> / Cab</span></span>
           </button>
 
           <button
             type="button"
             onClick={() => onSelectTravelMode?.('bike')}
-            className={`py-1.5 px-2 rounded-md text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
+            className={`py-1.5 px-1 sm:px-2 rounded-md text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 sm:gap-1.5 transition-all ${
               travelMode === 'bike'
                 ? 'bg-white text-emerald-800 shadow-xs border border-emerald-300 font-bold'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 border border-transparent'
             }`}
           >
-            <Bike className="h-3.5 w-3.5" />
+            <Bike className="h-3.5 w-3.5 shrink-0" />
             <span>Two-Wheeler</span>
           </button>
 
           <button
             type="button"
             onClick={() => onSelectTravelMode?.('bicycle')}
-            className={`py-1.5 px-2 rounded-md text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
+            className={`py-1.5 px-1 sm:px-2 rounded-md text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 sm:gap-1.5 transition-all ${
               travelMode === 'bicycle'
                 ? 'bg-white text-emerald-800 shadow-xs border border-emerald-300 font-bold'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 border border-transparent'
             }`}
           >
-            <Activity className="h-3.5 w-3.5" />
+            <Activity className="h-3.5 w-3.5 shrink-0" />
             <span>Bicycle</span>
           </button>
         </div>
-        <div className="mt-1.5 px-1 text-[11px] text-slate-500 flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+        <div className="mt-1.5 px-1 text-[10px] sm:text-[11px] text-slate-500 flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
           {travelMode === 'car' && <span>Cabin air filter active • Lower direct PM exposure (0.8x)</span>}
           {travelMode === 'bike' && <span>Direct road dust & exhaust exposure (~1.25x inhalation)</span>}
           {travelMode === 'bicycle' && <span>High respiration rate on active commute (~1.45x intake)</span>}
