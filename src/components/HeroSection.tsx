@@ -1,43 +1,48 @@
-import { Leaf, Shield, Database, MapPin } from 'lucide-react';
+import { ShieldCheck, Compass, Wind, Sparkles, MapPin } from 'lucide-react';
 
-const HeroSection = () => {
+export default function HeroSection() {
   return (
-    <header className="relative overflow-hidden py-16 md:py-24">
-      {/* Background effects */}
-      <div className="absolute inset-0 hero-gradient" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px]" />
-
-      <div className="relative container mx-auto px-4 text-center">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-6">
-          <Leaf className="h-4 w-4 text-primary" />
-          <span className="text-xs font-medium text-primary tracking-wide uppercase">Lucknow's Clean Air Navigator</span>
+    <div className="relative border-b border-slate-200/80 bg-gradient-to-b from-emerald-50/50 via-white to-slate-50/40 py-10 md:py-14">
+      <div className="container mx-auto px-4 text-center">
+        {/* Top Tagline Pill */}
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold mb-4 shadow-sm">
+          <Sparkles className="h-3.5 w-3.5 text-emerald-600" />
+          <span>Uttar Pradesh Environmental & Travel Intelligence</span>
         </div>
 
-        <h1 className="font-display text-4xl md:text-6xl font-bold tracking-tight mb-4 glow-text text-foreground">
-          The <span className="text-primary">Green</span> Path
+        {/* Primary Heading */}
+        <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight max-w-4xl mx-auto leading-tight">
+          Navigate Through Cleaner Air Across{' '}
+          <span className="text-emerald-700 underline decoration-emerald-300 decoration-wavy decoration-2 underline-offset-4">
+            Uttar Pradesh
+          </span>
         </h1>
-        <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-8">
-          Find the least-pollution route between two points in Lucknow. 
-          Prioritizing your health over speed — because every breath matters.
+
+        {/* Subtitle */}
+        <p className="mt-3.5 text-sm sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed">
+          Standard GPS apps prioritize only speed—often sending you through hazardous smog and congested industrial corridors. The Healthy Path evaluates real atmospheric air quality along alternative routes to recommend the path with the lowest estimated pollution exposure.
         </p>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
-          {[
-            { icon: Shield, label: 'Health Score', desc: 'Per route' },
-            { icon: MapPin, label: 'AQI Zones', desc: '12+ locations' },
-            { icon: Database, label: 'Open Data', desc: 'CPCB sourced' },
-            { icon: Leaf, label: 'PM2.5 Aware', desc: 'Dust avoidance' },
-          ].map(({ icon: Icon, label, desc }) => (
-            <div key={label} className="card-gradient rounded-lg border border-border p-4 text-center">
-              <Icon className="h-5 w-5 text-primary mx-auto mb-2" />
-              <span className="text-sm font-semibold text-foreground block">{label}</span>
-              <span className="text-xs text-muted-foreground">{desc}</span>
-            </div>
-          ))}
+        {/* Feature Badges */}
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs text-slate-700">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 shadow-soft">
+            <MapPin className="h-3.5 w-3.5 text-emerald-600" />
+            <span>All 75 Districts & Towns</span>
+          </div>
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 shadow-soft">
+            <Wind className="h-3.5 w-3.5 text-emerald-600" />
+            <span>Copernicus CAMS Sampling</span>
+          </div>
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 shadow-soft">
+            <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
+            <span>Cumulative Inhalation Scoring</span>
+          </div>
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 shadow-soft">
+            <Compass className="h-3.5 w-3.5 text-emerald-600" />
+            <span>OSRM Alternative Corridors</span>
+          </div>
         </div>
       </div>
-    </header>
+    </div>
   );
-};
-
-export default HeroSection;
+}

@@ -1,105 +1,118 @@
-# 🌿 The Healthy Path
+# 🌿 The Healthy Path (Uttar Pradesh 2.0)
 
 <p align="center">
-  <strong>Health-first route planning for cleaner and safer travel in Lucknow.</strong>
+  <strong>Statewide Low-Pollution Route Navigation & Environmental Intelligence for Uttar Pradesh</strong>
 </p>
 
 <p align="center">
-  <a href="https://the-healthy-path.vercel.app/">
-    <img src="https://img.shields.io/badge/🌐%20Live%20Demo-Visit%20The%20Healthy%20Path-16a085?style=for-the-badge" alt="Visit the live demo" />
-  </a>
-  <a href="https://github.com/Sanjeet3065/The-Healthy-Path">
-    <img src="https://img.shields.io/badge/⭐%20GitHub-View%20Repository-24292f?style=for-the-badge&logo=github" alt="View GitHub repository" />
-  </a>
+  <img src="https://img.shields.io/badge/Statewide%20Coverage-75%20Districts%20of%20UP-059669?style=for-the-badge" alt="75 Districts of Uttar Pradesh" />
+  <img src="https://img.shields.io/badge/Routing-OSRM%20Alternatives-0284c7?style=for-the-badge" alt="OSRM Routing Engine" />
+  <img src="https://img.shields.io/badge/Air%20Quality-Copernicus%20CAMS%20%26%20Open--Meteo-0f766e?style=for-the-badge" alt="Copernicus Atmospheric Reanalysis" />
 </p>
 
-The Healthy Path is a health-first route planner for Lucknow that suggests cleaner travel paths instead of simply choosing the fastest route. It compares route options using AQI, traffic intensity, and pollution-prone zones to help users reduce exposure to harmful air pollutants.
+---
 
-## Why this project?
+## 🎯 Overview
 
-Most navigation apps optimize for distance and time. But in polluted urban areas, the fastest route can also be the most harmful route.
+Most navigation applications optimize exclusively for travel time or distance. In heavily industrialized or traffic-congested regions, the fastest route is frequently the most hazardous to human respiratory health, funneling commuters directly through dense particulate plumes, construction dust, and freight diesel emissions.
 
-The Healthy Path helps users choose routes that minimize exposure to:
+**The Healthy Path** transforms travel planning across **all 75 districts, cities, towns, and villages of Uttar Pradesh**. It compares multiple road routes between any two locations in the state, samples atmospheric air quality point-by-point along available corridors, and recommends the path with the **lowest estimated cumulative pollution exposure**.
 
-- PM2.5 and airborne pollutants
-- High-AQI zones
-- Congested and pollution-heavy corridors
-- Industrial and construction-heavy areas
+---
 
-## Key Features
+## 🚀 Key Upgrades in Version 2.0
 
-- Cleanest route recommendations between two locations
-- Health score comparison for each route
-- AQI-aware route evaluation
-- Lucknow-specific pollution data model
-- Traffic and environmental risk indicators
-- Clear route ranking: Best, Moderate, or Avoid
-- Modern UI built with React, Vite, and Tailwind CSS
+### 1. Complete Uttar Pradesh Statewide Search Coverage
+- **Dynamic Geocoding**: Search any district, city, kasba, rural village, neighborhood, railway station, or landmark across UP.
+- **75 UP Districts Instant Index**: Zero-latency autocomplete for all 75 Uttar Pradesh administrative districts and tehsils.
+- **Official State Boundary Validation**: Integrated GeoJSON MultiPolygon boundary with a ray-casting point-in-polygon verification algorithm. Locations outside Uttar Pradesh are clearly flagged with friendly explanations.
 
-## How it works
+### 2. Multi-Route Generation Engine
+- **Real Road Geometries**: Powered by OpenStreetMap and OSRM (Open Source Routing Machine).
+- **Alternative Corridors**: Evaluates multiple alternative driving paths (e.g., Expressways vs. National Highways vs. Regional Bypasses).
+- **Accurate Distance & Duration**: Preserves actual road winding, highway legs, and driving duration.
 
-1. Select a source and destination inside Lucknow.
-2. The app evaluates multiple route options.
-3. Each route is scored based on pollution exposure factors.
-4. The route with the lowest health risk is recommended.
+### 3. Scientific Inhalation Exposure Scoring
+- **Point-by-Point Sampling**: Samples coordinates at regular intervals along each route geometry rather than assuming uniform air quality across hundreds of kilometers.
+- **Atmospheric Data**: Real-time atmospheric reanalysis (PM2.5, PM10, NO2, US AQI, EAQI) powered by Copernicus Atmosphere Monitoring Service (CAMS) & Open-Meteo.
+- **Cumulative Inhalation Dose Model**:
+  $$\text{Cumulative Exposure Index} = \text{Average AQI} \times \left(\frac{\text{Duration in Minutes}}{60}\right)$$
+- **Health Score (0–100)**: Transparent score penalizing high particulate concentration and prolonged travel exposure.
+- **Transparent Rationale**: Every recommendation clearly explains *why* a route is recommended over alternatives without fabricated percentages or fake live hardware claims.
 
-This creates a smarter travel decision: not just the shortest route, but the safest and healthiest route.
+### 4. Interactive Map Experience
+- **CartoDB Positron Basemap**: Clean, high-performance light aesthetic tailored for environmental intelligence.
+- **Uttar Pradesh State Outline**: Subtle emerald dashed boundary overlay indicating the active geographic scope.
+- **Custom Map Markers**: Clear green start pin (A) and dark destination marker (B).
+- **Active Route Polylines**: Distinct, accessible styling highlighting the recommended path in emerald and alternatives in slate/sky blue.
+- **Interactive AQI Waypoint Dots**: Clickable sampled pollution markers along the route displaying localized PM2.5, PM10, NO2, AQI, and data timestamps.
 
-## Tech Stack
+### 5. Statewide Live AQI Monitor & Guides
+- **Live Regional Snapshot**: Real-time air quality monitor across 12 major UP urban centers (Lucknow, Kanpur, Varanasi, Prayagraj, Agra, Noida, Gorakhpur, Bareilly, Meerut, Ayodhya, Jhansi, Moradabad) with click-to-route integration.
+- **National Air Quality Index (NAQI) Guide**: Official Central Pollution Control Board (CPCB) category definitions (Good, Satisfactory, Moderate, Poor, Very Poor, Severe) and commuter health precautions.
+- **Methodology & Data Transparency**: Comprehensive 5-step explanation distinguishing modeled atmospheric reanalysis from fixed CAAQMS sensor towers.
 
-- React
-- TypeScript
-- Vite
-- Tailwind CSS
-- shadcn/ui
-- Lucide Icons
-- React Router
-- TanStack Query
+---
 
-## Getting Started
+## 🛠️ Tech Stack
+
+- **Frontend Core**: React 18, TypeScript, Vite
+- **Styling**: Tailwind CSS, Shadcn UI components, Lucide Icons
+- **Interactive Mapping**: Leaflet, CartoDB Positron tiles
+- **Routing Engine**: OSRM (Open Source Routing Machine) API
+- **Geocoding Engine**: Photon (OSM-based) + OpenStreetMap Nominatim + UP 75 Districts Index
+- **Air Quality & Pollution Engine**: Open-Meteo Air Quality API (Copernicus CAMS & SILAM European/Global reanalysis)
+- **Validation**: Ray-casting Point-in-Polygon (PIP) against simplified Uttar Pradesh GeoJSON
+- **Testing**: Vitest, React Testing Library
+
+---
+
+## 🚦 Getting Started
 
 ### Prerequisites
-
 - Node.js 18+
 - npm
 
 ### Installation
-
 ```bash
 git clone https://github.com/Sanjeet3065/The-Healthy-Path.git
 cd The-Healthy-Path
 npm install
 ```
 
-### Run locally
-
+### Run Locally
 ```bash
 npm run dev
 ```
+Open `http://localhost:8080` in your web browser.
 
-Then open the local Vite URL shown in the terminal.
+### Run Tests
+```bash
+npm run test
+```
 
-### Build for production
-
+### Production Build
 ```bash
 npm run build
 ```
 
-## Data Model
+---
 
-The app uses a Lucknow-focused pollution simulation with route scores based on AQI levels, pollution zones, traffic density, construction activity, and industrial proximity.
+## 📍 Geographic Search Examples
 
-## Use Cases
-
-- Daily commuters
-- Students and office travelers
-- Health-conscious riders
-- Smart city and environmental awareness initiatives
-
-## Note
-
-This project is a frontend-based prototype that demonstrates a health-first routing concept using curated Lucknow area data and route simulation logic.
+- **Lucknow → Kanpur** (NH 27 vs. Unnao Bypass Corridor)
+- **Lucknow → Varanasi** (Purvanchal Expressway vs. Sultanpur Highway)
+- **Noida → Agra** (Yamuna Expressway vs. NH 19)
+- **Gorakhpur → Prayagraj** (Via Ayodhya / Sultanpur vs. Azamgarh)
+- **Meerut → Bareilly** (Via Moradabad vs. Sambhal)
+- **Small Towns & Villages**: Malihabad, Pipraich, Dalmau, Bikapur, Saidpur, Chandauli, Karwi, and all rural settlements across Uttar Pradesh.
 
 ---
 
-<p align="center">Built with care for cleaner, healthier commuting in Lucknow. 🌱</p>
+## 📄 Open Data & Attribution
+
+- **Map Data**: © [OpenStreetMap](https://www.openstreetmap.org/) contributors
+- **Map Tiles**: © [CARTO](https://carto.com/) Positron
+- **Routing Engine**: [Project OSRM](http://project-osrm.org/)
+- **Atmospheric Data**: Copernicus Atmosphere Monitoring Service (CAMS) & [Open-Meteo](https://open-meteo.com/)
+- **Air Quality Benchmarks**: Central Pollution Control Board (CPCB), Ministry of Environment, Forest and Climate Change, Government of India
