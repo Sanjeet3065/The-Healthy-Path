@@ -4,20 +4,18 @@ import HeroSection from '@/components/HeroSection';
 import InteractiveMap from '@/components/Map/InteractiveMap';
 import LocationSearchInput from '@/components/RouteSearch/LocationSearchInput';
 import RouteComparisonPanel from '@/components/RouteComparison/RouteComparisonPanel';
-import StatewideAqiMonitor from '@/components/Dashboard/StatewideAqiMonitor';
-import AirQualityGuide from '@/components/Dashboard/AirQualityGuide';
-import MethodologySection from '@/components/Dashboard/MethodologySection';
+import EnvironmentalHub from '@/components/Dashboard/EnvironmentalHub';
 import { reverseGeocodeLocation, type LocationItem } from '@/lib/geocoding';
 import { fetchAlternativeRoutes } from '@/lib/routing';
 import { evaluateRoutesPollution, type EvaluatedRoute } from '@/lib/pollution-service';
-import { AlertCircle, Leaf, Compass, ShieldCheck } from 'lucide-react';
+import { AlertCircle, Leaf, Compass } from 'lucide-react';
 
 export default function Index() {
   // Default to Lucknow -> Kanpur as initial showcase
   const [origin, setOrigin] = useState<LocationItem | null>({
     id: 'dist-lucknow',
     name: 'Lucknow',
-    displayName: 'Lucknow, Lucknow Division, Uttar Pradesh',
+    displayName: 'Lucknow, Uttar Pradesh',
     lat: 26.8467,
     lng: 80.9462,
     district: 'Lucknow',
@@ -30,7 +28,7 @@ export default function Index() {
   const [destination, setDestination] = useState<LocationItem | null>({
     id: 'dist-kanpur-nagar',
     name: 'Kanpur',
-    displayName: 'Kanpur, Kanpur Division, Uttar Pradesh',
+    displayName: 'Kanpur, Uttar Pradesh',
     lat: 26.4499,
     lng: 80.3319,
     district: 'Kanpur',
@@ -53,9 +51,7 @@ export default function Index() {
     }
 
     if (!origin.isWithinUP || !destination.isWithinUP) {
-      setErrorMsg(
-        'Both locations must be within Uttar Pradesh state boundary. Please adjust your selection.'
-      );
+      setErrorMsg('Both locations must be within Uttar Pradesh.');
       return;
     }
 
@@ -63,37 +59,32 @@ export default function Index() {
     setErrorMsg(null);
 
     try {
-      // 1. Fetch real alternative route geometries from OSRM
       const rawRoutes = await fetchAlternativeRoutes(origin, destination);
 
       if (!rawRoutes || rawRoutes.length === 0) {
-        setErrorMsg('Could not calculate a road path between these two points. Please try nearby towns or highways.');
+        setErrorMsg('Could not find road path. Please try another location.');
         setRoutes([]);
         setSelectedRouteId(null);
         return;
       }
 
-      // 2. Sample atmospheric air quality along each route and calculate cumulative exposure
       const evaluated = await evaluateRoutesPollution(rawRoutes);
       setRoutes(evaluated);
 
-      // Select recommended route by default
       const recommended = evaluated.find((r) => r.pollution?.recommendation === 'recommended');
       setSelectedRouteId(recommended ? recommended.id : evaluated[0].id);
     } catch (err: any) {
       console.error('Route calculation error:', err);
-      setErrorMsg('An unexpected error occurred while analyzing routes. Please try again.');
+      setErrorMsg('Unable to analyze routes at this moment. Please retry.');
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Run initial route evaluation on first load so user immediately sees live data
   useEffect(() => {
     handleSearchRoutes();
   }, []);
 
-  // Map click handler to reverse geocode clicked point as destination if none, or update
   const handleMapClick = async (lat: number, lng: number) => {
     try {
       const loc = await reverseGeocodeLocation(lat, lng);
@@ -101,33 +92,29 @@ export default function Index() {
         setDestination(loc);
       }
     } catch (e) {
-      console.warn('Map click reverse geocode notice:', e);
+      console.warn('Map click notice:', e);
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/50 flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-50/60 flex flex-col font-sans">
       <Navbar />
 
       <HeroSection />
 
-      <main className="container mx-auto px-4 py-8 space-y-8 flex-1">
-        {/* Error notification banner if any */}
+      <main className="container mx-auto px-4 py-6 space-y-6 flex-1">
         {errorMsg && (
-          <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-sm text-red-800 flex items-start gap-3 shadow-sm">
-            <AlertCircle className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />
-            <div className="flex-1">
-              <span className="font-semibold block">Notice</span>
-              <span>{errorMsg}</span>
-            </div>
+          <div className="p-3.5 rounded-lg bg-red-50 border border-red-200 text-xs text-red-800 flex items-center gap-2">
+            <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
+            <span>{errorMsg}</span>
           </div>
         )}
 
-        {/* Primary Interactive Section: Search Panel, Map, and Route Comparison */}
-        <section id="route-planner" className="space-y-6">
-          <div className="grid lg:grid-cols-12 gap-6 items-start">
-            {/* Left Column: Search Form & Route Comparison Cards */}
-            <div className="lg:col-span-5 space-y-6">
+        {/* Primary Route Planner Experience */}
+        <section id="route-planner" className="space-y-4">
+          <div className="grid lg:grid-cols-12 gap-5 items-start">
+            {/* Left Column: Search & Route Results */}
+            <div className="lg:col-span-5 space-y-4">
               <LocationSearchInput
                 origin={origin}
                 destination={destination}
@@ -145,21 +132,19 @@ export default function Index() {
                 />
               ) : (
                 !isLoading && (
-                  <div className="bg-white rounded-xl border border-slate-200/90 p-8 text-center shadow-card">
-                    <div className="w-12 h-12 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center mx-auto mb-3">
-                      <Compass className="h-6 w-6" />
-                    </div>
-                    <h3 className="text-sm font-bold text-slate-800 mb-1">Select Origin & Destination</h3>
-                    <p className="text-xs text-slate-500 max-w-xs mx-auto">
-                      Choose any two locations across Uttar Pradesh to generate alternative highway routes and compare cumulative air pollution exposure.
+                  <div className="bg-white rounded-xl border border-slate-200/80 p-6 text-center shadow-soft">
+                    <Compass className="h-6 w-6 text-emerald-600 mx-auto mb-2" />
+                    <h3 className="text-xs font-bold text-slate-800 mb-1">Select Locations</h3>
+                    <p className="text-xs text-slate-500">
+                      Choose any starting point and destination in Uttar Pradesh to compare route pollution.
                     </p>
                   </div>
                 )
               )}
             </div>
 
-            {/* Right Column: Full Interactive Map */}
-            <div className="lg:col-span-7 sticky top-20">
+            {/* Right Column: Interactive Map */}
+            <div className="lg:col-span-7 sticky top-16">
               <InteractiveMap
                 origin={origin}
                 destination={destination}
@@ -172,46 +157,31 @@ export default function Index() {
           </div>
         </section>
 
-        {/* Live Statewide Air Quality Monitor Section */}
-        <section id="statewide-monitor">
-          <StatewideAqiMonitor
-            onSelectCityAsDestination={(city) => {
+        {/* Unified Minimalist Environmental Intelligence Hub */}
+        <section id="environmental-hub">
+          <EnvironmentalHub
+            onSelectCity={(city) => {
               setDestination(city);
               const el = document.getElementById('route-planner');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
           />
         </section>
-
-        {/* Scientific Methodology & Data Transparency */}
-        <section id="methodology">
-          <MethodologySection />
-        </section>
-
-        {/* Air Quality Guide & Traveler Health Recommendations */}
-        <section id="aqi-guide">
-          <AirQualityGuide />
-        </section>
       </main>
 
-      {/* Modern, Clean Footer */}
-      <footer className="border-t border-slate-200 bg-white py-8 text-xs text-slate-500">
-        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md bg-emerald-700 text-white flex items-center justify-center">
-              <Leaf className="h-3.5 w-3.5" />
-            </div>
-            <span className="font-bold text-slate-800">The Healthy Path — Uttar Pradesh 2.0</span>
+      {/* Clean Minimalist Footer */}
+      <footer className="border-t border-slate-200/80 bg-white py-5 text-xs text-slate-400">
+        <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+          <div className="flex items-center gap-2 text-slate-700 font-semibold">
+            <Leaf className="h-4 w-4 text-emerald-700" />
+            <span>The Healthy Path</span>
+            <span className="text-slate-300">•</span>
+            <span className="font-normal text-slate-500">Uttar Pradesh</span>
           </div>
 
-          <div className="text-center md:text-right space-y-1">
-            <p>
-              Open Data Attribution: &copy; OpenStreetMap contributors • Open Source Routing Machine (OSRM) • Copernicus CAMS & Open-Meteo
-            </p>
-            <p className="text-slate-400">
-              Environmental intelligence prototype designed for cleaner transit decisions across Uttar Pradesh.
-            </p>
-          </div>
+          <p className="text-[11px]">
+            Data: OpenStreetMap • Project OSRM • Copernicus CAMS Atmospheric Reanalysis
+          </p>
         </div>
       </footer>
     </div>

@@ -366,47 +366,31 @@ export default function InteractiveMap({
       {/* Map DOM Container */}
       <div ref={mapContainerRef} className="w-full h-full" />
 
-      {/* Floating Header Info Badge (Top Left) */}
-      <div className="absolute top-3 left-3 z-[400] flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/95 backdrop-blur-sm border border-slate-200 shadow-sm text-xs font-medium text-slate-700">
-        <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
-        <span className="font-semibold text-slate-900">Uttar Pradesh Detailed Map</span>
-        <span className="text-slate-400">|</span>
-        <span className="text-emerald-700 font-medium">All Cities & Towns Labeled</span>
+      {/* Floating Indicator (Top Left) */}
+      <div className="absolute top-3 left-3 z-[400] flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/90 backdrop-blur-sm border border-slate-200/80 shadow-sm text-[11px] font-semibold text-slate-800">
+        <span className="w-2 h-2 rounded-full bg-emerald-600" />
+        <span>Uttar Pradesh</span>
       </div>
 
-      {/* Floating Map Action Controls & Layer Switcher (Top Right) */}
+      {/* Floating Map Controls & Layer Switcher (Top Right) */}
       <div className="absolute top-3 right-14 z-[400] flex items-center gap-1.5">
-        {/* Layer Switcher Buttons */}
-        <div className="flex items-center rounded-lg bg-white/95 border border-slate-200 shadow-sm p-0.5 text-xs font-medium">
+        <div className="flex items-center rounded-lg bg-white/95 border border-slate-200 shadow-sm p-0.5 text-xs">
           <button
             onClick={() => switchBaseLayer('osm')}
-            title="OpenStreetMap: Full labels for all cities, towns, roads, villages"
-            className={`px-2.5 py-1 rounded-md transition-all ${
+            className={`px-2.5 py-1 rounded-md font-semibold transition-all ${
               activeBaseLayer === 'osm'
-                ? 'bg-emerald-700 text-white font-bold shadow-sm'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                ? 'bg-emerald-700 text-white shadow-sm'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            Detailed Map
-          </button>
-          <button
-            onClick={() => switchBaseLayer('esri_street')}
-            title="Esri Streets: Navigation Highway Map"
-            className={`px-2.5 py-1 rounded-md transition-all ${
-              activeBaseLayer === 'esri_street'
-                ? 'bg-emerald-700 text-white font-bold shadow-sm'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
-          >
-            Streets
+            Street Map
           </button>
           <button
             onClick={() => switchBaseLayer('satellite')}
-            title="Satellite with City & Highway Labels"
-            className={`px-2.5 py-1 rounded-md transition-all ${
+            className={`px-2.5 py-1 rounded-md font-semibold transition-all ${
               activeBaseLayer === 'satellite'
-                ? 'bg-emerald-700 text-white font-bold shadow-sm'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                ? 'bg-emerald-700 text-white shadow-sm'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Satellite
@@ -416,20 +400,19 @@ export default function InteractiveMap({
         <button
           onClick={handleFitRoute}
           disabled={routes.length === 0}
-          title="Fit Selected Route"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/95 hover:bg-white text-slate-700 border border-slate-200 shadow-sm text-xs font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          title="Fit Route"
+          className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-white/95 text-slate-700 border border-slate-200 shadow-sm text-xs font-medium hover:bg-slate-50 disabled:opacity-40 transition-colors"
         >
           <Maximize2 className="h-3.5 w-3.5 text-slate-600" />
-          <span className="hidden sm:inline">Fit Route</span>
+          <span className="hidden sm:inline">Fit</span>
         </button>
 
         <button
           onClick={handleResetToUP}
-          title="Reset to Uttar Pradesh Overview"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/95 hover:bg-white text-slate-700 border border-slate-200 shadow-sm text-xs font-medium transition-colors"
+          title="Reset View"
+          className="p-1.5 rounded-lg bg-white/95 text-slate-700 border border-slate-200 shadow-sm text-xs hover:bg-slate-50 transition-colors"
         >
           <RotateCcw className="h-3.5 w-3.5 text-slate-600" />
-          <span className="hidden sm:inline">Reset UP</span>
         </button>
       </div>
 
