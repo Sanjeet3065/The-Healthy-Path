@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import InteractiveMap from '@/components/Map/InteractiveMap';
 import LocationSearchInput from '@/components/RouteSearch/LocationSearchInput';
 import RouteComparisonPanel from '@/components/RouteComparison/RouteComparisonPanel';
+import RouteInsightsPanel from '@/components/RouteComparison/RouteInsightsPanel';
 import EnvironmentalHub from '@/components/Dashboard/EnvironmentalHub';
 import { reverseGeocodeLocation, type LocationItem } from '@/lib/geocoding';
 import { fetchAlternativeRoutes } from '@/lib/routing';
@@ -221,8 +222,8 @@ export default function Index() {
               </div>
             </div>
 
-            {/* Interactive Map (Middle on Mobile, Sticky Right Column on Desktop) */}
-            <div className="lg:col-span-7 lg:sticky lg:top-16 space-y-4">
+            {/* Interactive Map & Route Insights (Right Column on Desktop) */}
+            <div className="lg:col-span-7 space-y-4">
               <InteractiveMap
                 origin={origin}
                 destination={destination}
@@ -232,17 +233,39 @@ export default function Index() {
                 onMapClick={handleMapClick}
               />
 
-              {/* Mobile/Tablet Route Comparison (directly below the map for intuitive mobile UX) */}
+              {/* Desktop-only Route Environmental & Health Insights (Fills the space beneath the map) */}
+              <div className="hidden lg:block">
+                <RouteInsightsPanel
+                  selectedRoute={routes.find((r) => r.id === selectedRouteId) || routes[0] || null}
+                  routes={routes}
+                  travelMode={travelMode}
+                  corridorAtmosphere={corridorAtmosphere}
+                  originName={origin?.name}
+                  destinationName={destination?.name}
+                />
+              </div>
+
+              {/* Mobile/Tablet Route Comparison & Insights (directly below the map for intuitive mobile UX) */}
               <div className="block lg:hidden space-y-4">
                 {routes.length > 0 ? (
-                  <RouteComparisonPanel
-                    routes={routes}
-                    selectedRouteId={selectedRouteId}
-                    onSelectRoute={setSelectedRouteId}
-                    corridorAtmosphere={corridorAtmosphere}
-                    originName={origin?.name}
-                    destinationName={destination?.name}
-                  />
+                  <>
+                    <RouteComparisonPanel
+                      routes={routes}
+                      selectedRouteId={selectedRouteId}
+                      onSelectRoute={setSelectedRouteId}
+                      corridorAtmosphere={corridorAtmosphere}
+                      originName={origin?.name}
+                      destinationName={destination?.name}
+                    />
+                    <RouteInsightsPanel
+                      selectedRoute={routes.find((r) => r.id === selectedRouteId) || routes[0] || null}
+                      routes={routes}
+                      travelMode={travelMode}
+                      corridorAtmosphere={corridorAtmosphere}
+                      originName={origin?.name}
+                      destinationName={destination?.name}
+                    />
+                  </>
                 ) : (
                   !isLoading && (
                     <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 p-5 text-center shadow-soft transition-colors duration-200">
