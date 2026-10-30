@@ -148,7 +148,16 @@ export default function InteractiveMap({
       }
     });
 
+    // Auto-invalidate size on viewport or container resize
+    const resizeObserver = new ResizeObserver(() => {
+      map.invalidateSize();
+    });
+    if (mapContainerRef.current) {
+      resizeObserver.observe(mapContainerRef.current);
+    }
+
     return () => {
+      resizeObserver.disconnect();
       map.remove();
       mapInstanceRef.current = null;
     };
@@ -343,7 +352,7 @@ export default function InteractiveMap({
     const activeRoute = routes.find((r) => r.id === selectedRouteId) || routes[0];
     if (activeRoute && activeRoute.coordinates.length > 0) {
       const bounds = L.latLngBounds(activeRoute.coordinates);
-      map.fitBounds(bounds, { padding: [50, 50], maxZoom: 14 });
+      map.fitBounds(bounds, { padding: [30, 30], maxZoom: 13 });
     }
   }, [routes, selectedRouteId]);
 
@@ -359,12 +368,12 @@ export default function InteractiveMap({
     const activeRoute = routes.find((r) => r.id === selectedRouteId) || routes[0];
     if (activeRoute && activeRoute.coordinates.length > 0) {
       const bounds = L.latLngBounds(activeRoute.coordinates);
-      mapInstanceRef.current.fitBounds(bounds, { padding: [50, 50], maxZoom: 14 });
+      mapInstanceRef.current.fitBounds(bounds, { padding: [30, 30], maxZoom: 13 });
     }
   };
 
   return (
-    <div className="relative w-full h-[360px] sm:h-[460px] md:h-[520px] lg:h-[620px] rounded-xl overflow-hidden border border-slate-200/80 bg-slate-100 shadow-soft">
+    <div className="relative w-full h-[280px] sm:h-[360px] md:h-[420px] lg:h-[480px] rounded-xl overflow-hidden border border-slate-200/80 bg-slate-100 shadow-soft">
       {/* Map DOM Container */}
       <div ref={mapContainerRef} className="w-full h-full" />
 
