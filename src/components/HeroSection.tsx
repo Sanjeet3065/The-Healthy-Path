@@ -16,9 +16,9 @@ export default function HeroSection() {
         </div>
 
         {/* Clean, Impactful Heading */}
-        <h1 className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight leading-snug sm:leading-tight px-1">
-          Find the Cleanest Route Across{' '}
-          <span className="text-emerald-700 dark:text-emerald-400 underline decoration-emerald-300 dark:decoration-emerald-600 decoration-wavy underline-offset-4">
+        <h1 className="text-base min-[360px]:text-lg min-[410px]:text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight leading-snug sm:leading-tight px-1 text-center">
+          <span className="block sm:inline">Find the Cleanest Route Across</span>{' '}
+          <span className="inline-block whitespace-nowrap text-emerald-700 dark:text-emerald-400 underline decoration-emerald-300 dark:decoration-emerald-600 decoration-wavy underline-offset-4 mt-0.5 sm:mt-0">
             Uttar Pradesh
           </span>
         </h1>
