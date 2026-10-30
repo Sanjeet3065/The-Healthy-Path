@@ -216,44 +216,44 @@ export default function LocationSearchInput({
           <span>Travel Mode</span>
           <span className="text-[10px] text-slate-500 dark:text-slate-400 font-normal hidden sm:inline">Calibrates Inhalation</span>
         </div>
-        <div className="grid grid-cols-3 gap-1">
+        <div className="grid grid-cols-3 gap-1 sm:gap-1.5">
           <button
             type="button"
             onClick={() => onSelectTravelMode?.('car')}
-            className={`py-1.5 px-1 sm:px-2 rounded-md text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 sm:gap-1.5 transition-all ${
+            className={`py-2 px-1 sm:px-2 min-h-[42px] sm:min-h-[38px] rounded-lg text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 sm:gap-1.5 transition-all ${
               travelMode === 'car'
                 ? 'bg-white dark:bg-slate-700/90 text-emerald-800 dark:text-emerald-300 shadow-xs border border-emerald-300 dark:border-emerald-500 font-bold'
                 : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-slate-700/50 border border-transparent'
             }`}
           >
             <Car className="h-3.5 w-3.5 shrink-0" />
-            <span>Car<span className="hidden sm:inline"> / Cab</span></span>
+            <span className="truncate">Car<span className="hidden sm:inline"> / Cab</span></span>
           </button>
 
           <button
             type="button"
             onClick={() => onSelectTravelMode?.('bike')}
-            className={`py-1.5 px-1 sm:px-2 rounded-md text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 sm:gap-1.5 transition-all ${
+            className={`py-2 px-1 sm:px-2 min-h-[42px] sm:min-h-[38px] rounded-lg text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 sm:gap-1.5 transition-all ${
               travelMode === 'bike'
                 ? 'bg-white dark:bg-slate-700/90 text-emerald-800 dark:text-emerald-300 shadow-xs border border-emerald-300 dark:border-emerald-500 font-bold'
                 : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-slate-700/50 border border-transparent'
             }`}
           >
             <Bike className="h-3.5 w-3.5 shrink-0" />
-            <span>Two-Wheeler</span>
+            <span className="truncate">Two-Wheeler</span>
           </button>
 
           <button
             type="button"
             onClick={() => onSelectTravelMode?.('bicycle')}
-            className={`py-1.5 px-1 sm:px-2 rounded-md text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 sm:gap-1.5 transition-all ${
+            className={`py-2 px-1 sm:px-2 min-h-[42px] sm:min-h-[38px] rounded-lg text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 sm:gap-1.5 transition-all ${
               travelMode === 'bicycle'
                 ? 'bg-white dark:bg-slate-700/90 text-emerald-800 dark:text-emerald-300 shadow-xs border border-emerald-300 dark:border-emerald-500 font-bold'
                 : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-slate-700/50 border border-transparent'
             }`}
           >
             <Activity className="h-3.5 w-3.5 shrink-0" />
-            <span>Bicycle</span>
+            <span className="truncate">Bicycle</span>
           </button>
         </div>
         <div className="mt-1.5 px-1 text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
@@ -365,7 +365,8 @@ export default function LocationSearchInput({
             type="button"
             onClick={handleSwap}
             title="Swap Origin and Destination"
-            className="p-1.5 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-emerald-500 dark:hover:border-emerald-400 text-slate-600 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 shadow-sm transition-all"
+            aria-label="Swap starting point and destination"
+            className="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-emerald-500 dark:hover:border-emerald-400 text-slate-600 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 shadow-xs transition-all flex items-center justify-center"
           >
             <ArrowUpDown className="h-3.5 w-3.5" />
           </button>
@@ -495,7 +496,7 @@ export default function LocationSearchInput({
               key={`${p.from}-${p.to}`}
               type="button"
               onClick={() => handleApplyPreset(p)}
-              className="text-xs px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800/90 hover:bg-emerald-50 dark:hover:bg-emerald-950/60 hover:text-emerald-800 dark:hover:text-emerald-300 border border-slate-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-300 transition-colors"
+              className="text-xs px-2.5 py-1.5 min-h-[32px] flex items-center rounded-md bg-slate-100 dark:bg-slate-800/90 hover:bg-emerald-50 dark:hover:bg-emerald-950/60 hover:text-emerald-800 dark:hover:text-emerald-300 border border-slate-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-300 transition-colors"
             >
               {p.from} → {p.to}
             </button>

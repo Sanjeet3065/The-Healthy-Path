@@ -96,39 +96,39 @@ export default function RouteInsightsPanel({
         </div>
 
         {/* 3 Tab Switchers */}
-        <div className="grid grid-cols-3 gap-1 p-0.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 text-[11px] font-medium">
+        <div className="grid grid-cols-3 gap-1 p-0.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold">
           <button
             type="button"
             onClick={() => setActiveTab('advisory')}
-            className={`py-1.5 px-2 rounded-md transition-all text-center truncate ${
+            className={`py-2 px-1 sm:px-2 min-h-[38px] sm:min-h-[34px] rounded-md transition-all flex items-center justify-center text-center truncate ${
               activeTab === 'advisory'
                 ? 'bg-white dark:bg-slate-900 text-emerald-800 dark:text-emerald-400 font-bold shadow-2xs'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
             }`}
           >
-            Commuter Advisory
+            <span><span className="hidden min-[380px]:inline">Commuter </span>Advisory</span>
           </button>
           <button
             type="button"
             onClick={() => setActiveTab('waypoints')}
-            className={`py-1.5 px-2 rounded-md transition-all text-center truncate ${
+            className={`py-2 px-1 sm:px-2 min-h-[38px] sm:min-h-[34px] rounded-md transition-all flex items-center justify-center text-center truncate ${
               activeTab === 'waypoints'
                 ? 'bg-white dark:bg-slate-900 text-emerald-800 dark:text-emerald-400 font-bold shadow-2xs'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
             }`}
           >
-            Waypoints ({waypoints.length})
+            <span>Waypoints ({waypoints.length})</span>
           </button>
           <button
             type="button"
             onClick={() => setActiveTab('helpline')}
-            className={`py-1.5 px-2 rounded-md transition-all text-center truncate ${
+            className={`py-2 px-1 sm:px-2 min-h-[38px] sm:min-h-[34px] rounded-md transition-all flex items-center justify-center text-center truncate ${
               activeTab === 'helpline'
                 ? 'bg-white dark:bg-slate-900 text-emerald-800 dark:text-emerald-400 font-bold shadow-2xs'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
             }`}
           >
-            Emergency & Helplines
+            <span><span className="hidden min-[380px]:inline">Emergency & </span>Helplines</span>
           </button>
         </div>
       </div>

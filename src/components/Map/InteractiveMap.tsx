@@ -380,7 +380,10 @@ export default function InteractiveMap({
       {/* Floating Indicator (Top Left) */}
       <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-[400] flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded-md bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/80 dark:border-slate-700/80 shadow-xs text-[10px] sm:text-[11px] font-semibold text-slate-800 dark:text-slate-200">
         <span className="w-2 h-2 rounded-full bg-emerald-600 dark:bg-emerald-500 animate-pulse shrink-0" />
-        <span className="whitespace-nowrap">Uttar Pradesh</span>
+        <span className="whitespace-nowrap">
+          <span className="hidden min-[380px]:inline">Uttar Pradesh</span>
+          <span className="min-[380px]:hidden">UP</span>
+        </span>
       </div>
 
       {/* Floating Map Controls & Layer Switcher (Top Right) */}
@@ -412,7 +415,8 @@ export default function InteractiveMap({
           onClick={handleFitRoute}
           disabled={routes.length === 0}
           title="Fit Route Bounds"
-          className="flex items-center gap-1 px-1.5 min-[360px]:px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg bg-white/95 dark:bg-slate-900/95 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shadow-xs text-[10px] sm:text-xs font-medium hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-40 transition-colors"
+          aria-label="Fit map to route bounds"
+          className="flex items-center justify-center gap-1 px-1.5 min-[360px]:px-2 sm:px-2.5 min-w-[30px] min-h-[30px] sm:min-w-[34px] sm:min-h-[34px] rounded-lg bg-white/95 dark:bg-slate-900/95 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shadow-xs text-[10px] sm:text-xs font-medium hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-40 transition-colors"
         >
           <Maximize2 className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
           <span className="hidden md:inline">Fit</span>
@@ -421,7 +425,8 @@ export default function InteractiveMap({
         <button
           onClick={handleResetToUP}
           title="Reset to UP View"
-          className="p-1 min-[360px]:p-1.5 rounded-lg bg-white/95 dark:bg-slate-900/95 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shadow-xs text-xs hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+          aria-label="Reset map to Uttar Pradesh center"
+          className="min-w-[30px] min-h-[30px] sm:min-w-[34px] sm:min-h-[34px] flex items-center justify-center rounded-lg bg-white/95 dark:bg-slate-900/95 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shadow-xs text-xs hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
         >
           <RotateCcw className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
         </button>

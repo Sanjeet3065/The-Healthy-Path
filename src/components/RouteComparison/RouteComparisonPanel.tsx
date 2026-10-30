@@ -99,8 +99,8 @@ export default function RouteComparisonPanel({
           </span>
         </div>
 
-        <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-100 leading-snug">{recommendedRoute.name}</h3>
-        <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mb-2.5 sm:mb-3">{recommendedRoute.summary}</p>
+        <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-100 leading-snug break-words">{recommendedRoute.name}</h3>
+        <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mb-2.5 sm:mb-3 break-words">{recommendedRoute.summary}</p>
 
         {/* Responsive Metrics Strip */}
         <div className="grid grid-cols-4 gap-1 sm:gap-2 py-2 sm:py-2.5 px-1 sm:px-3 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/60 text-center">
@@ -184,7 +184,7 @@ export default function RouteComparisonPanel({
                 }`}
               >
                 <div className="flex items-center justify-between gap-2 mb-1.5">
-                  <span className="text-xs font-bold text-slate-800 dark:text-slate-100 truncate">{route.name}</span>
+                  <span className="text-xs font-bold text-slate-800 dark:text-slate-100 truncate min-w-0 flex-1">{route.name}</span>
                   <span
                     className={`text-[10px] font-semibold px-2 py-0.5 rounded shrink-0 ${
                       isHigh
