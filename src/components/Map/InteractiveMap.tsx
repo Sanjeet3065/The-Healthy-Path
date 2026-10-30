@@ -3,7 +3,7 @@ import L from 'leaflet';
 import upBoundaryData from '@/lib/up-boundary.json';
 import type { LocationItem } from '@/lib/geocoding';
 import type { EvaluatedRoute } from '@/lib/pollution-service';
-import { Maximize2, RotateCcw, Info, Layers } from 'lucide-react';
+import { Maximize2, RotateCcw, Info, Layers, Map as MapIcon } from 'lucide-react';
 
 interface InteractiveMapProps {
   origin: LocationItem | null;
@@ -29,13 +29,69 @@ export default function InteractiveMap({
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
 
+  // Active Tile Layer reference
+  const currentTileLayerRef = useRef<L.TileLayer | null>(null);
+  const satelliteLabelsRef = useRef<L.TileLayer | null>(null);
+
   // Layer groups to update dynamically
   const boundaryLayerRef = useRef<L.GeoJSON | null>(null);
   const markersLayerRef = useRef<L.LayerGroup | null>(null);
   const routesLayerRef = useRef<L.LayerGroup | null>(null);
   const samplesLayerRef = useRef<L.LayerGroup | null>(null);
 
-  const [activeLayerType, setActiveLayerType] = useState<'light' | 'osm'>('light');
+  const [activeBaseLayer, setActiveBaseLayer] = useState<'osm' | 'esri_street' | 'satellite'>('osm');
+
+  // Switch base map tiles
+  const switchBaseLayer = (layerType: 'osm' | 'esri_street' | 'satellite') => {
+    const map = mapInstanceRef.current;
+    if (!map) return;
+
+    if (currentTileLayerRef.current) {
+      map.removeLayer(currentTileLayerRef.current);
+    }
+    if (satelliteLabelsRef.current) {
+      map.removeLayer(satelliteLabelsRef.current);
+      satelliteLabelsRef.current = null;
+    }
+
+    let newLayer: L.TileLayer;
+
+    if (layerType === 'osm') {
+      // OpenStreetMap Standard Tiles: Complete place names (cities, towns, villages, roads, landmarks)
+      newLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19,
+      });
+    } else if (layerType === 'esri_street') {
+      // Esri World Street Map: Clean navigation map with all highway numbers and city labels
+      newLayer = L.tileLayer(
+        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+        {
+          attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap',
+          maxZoom: 19,
+        }
+      );
+    } else {
+      // Esri Satellite Imagery + Hybrid Labels
+      newLayer = L.tileLayer(
+        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        {
+          attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye',
+          maxZoom: 19,
+        }
+      );
+      const labelsLayer = L.tileLayer(
+        'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
+        { maxZoom: 19 }
+      );
+      labelsLayer.addTo(map);
+      satelliteLabelsRef.current = labelsLayer;
+    }
+
+    newLayer.addTo(map);
+    currentTileLayerRef.current = newLayer;
+    setActiveBaseLayer(layerType);
+  };
 
   // Initialize map once
   useEffect(() => {
@@ -49,18 +105,14 @@ export default function InteractiveMap({
       attributionControl: true,
     });
 
-    // Clean light basemap (CartoDB Positron)
-    const lightTileLayer = L.tileLayer(
-      'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-      {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
-        subdomains: 'abcd',
-        maxZoom: 19,
-      }
-    );
+    // Default: OpenStreetMap standard with full place names, towns, roads, villages
+    const osmLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19,
+    });
 
-    lightTileLayer.addTo(map);
+    osmLayer.addTo(map);
+    currentTileLayerRef.current = osmLayer;
 
     // Zoom control in top right
     L.control.zoom({ position: 'topright' }).addTo(map);
@@ -69,10 +121,10 @@ export default function InteractiveMap({
     const boundaryLayer = L.geoJSON(upBoundaryData as any, {
       style: {
         color: '#059669',
-        weight: 1.8,
-        dashArray: '5, 5',
+        weight: 2,
+        dashArray: '6, 6',
         fillColor: '#10b981',
-        fillOpacity: 0.03,
+        fillOpacity: 0.04,
       },
       interactive: false,
     }).addTo(map);
@@ -113,20 +165,20 @@ export default function InteractiveMap({
       const originIcon = L.divIcon({
         className: 'custom-map-pin origin-pin',
         html: `
-          <div style="background-color: #059669; width: 32px; height: 32px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(5,150,105,0.4); border: 2.5px solid #ffffff;">
-            <div style="transform: rotate(45deg); color: #ffffff; font-weight: 700; font-size: 13px; line-height: 1;">A</div>
+          <div style="background-color: #059669; width: 34px; height: 34px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(5,150,105,0.45); border: 2.5px solid #ffffff;">
+            <div style="transform: rotate(45deg); color: #ffffff; font-weight: 800; font-size: 13px; line-height: 1;">A</div>
           </div>
         `,
-        iconSize: [32, 32],
-        iconAnchor: [16, 32],
-        popupAnchor: [0, -32],
+        iconSize: [34, 34],
+        iconAnchor: [17, 34],
+        popupAnchor: [0, -34],
       });
 
       const m = L.marker([origin.lat, origin.lng], { icon: originIcon });
       m.bindPopup(`
         <div style="padding: 10px 14px; min-width: 170px;">
           <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: #059669; letter-spacing: 0.5px;">Starting Point (Origin)</div>
-          <div style="font-size: 14px; font-weight: 600; color: #0f172a; margin-top: 2px;">${origin.name}</div>
+          <div style="font-size: 14px; font-weight: 700; color: #0f172a; margin-top: 2px;">${origin.name}</div>
           <div style="font-size: 12px; color: #64748b; margin-top: 2px;">${origin.displayName}</div>
         </div>
       `);
@@ -138,20 +190,20 @@ export default function InteractiveMap({
       const destIcon = L.divIcon({
         className: 'custom-map-pin dest-pin',
         html: `
-          <div style="background-color: #0f172a; width: 32px; height: 32px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(15,23,42,0.4); border: 2.5px solid #ffffff;">
-            <div style="transform: rotate(45deg); color: #ffffff; font-weight: 700; font-size: 13px; line-height: 1;">B</div>
+          <div style="background-color: #0f172a; width: 34px; height: 34px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(15,23,42,0.45); border: 2.5px solid #ffffff;">
+            <div style="transform: rotate(45deg); color: #ffffff; font-weight: 800; font-size: 13px; line-height: 1;">B</div>
           </div>
         `,
-        iconSize: [32, 32],
-        iconAnchor: [16, 32],
-        popupAnchor: [0, -32],
+        iconSize: [34, 34],
+        iconAnchor: [17, 34],
+        popupAnchor: [0, -34],
       });
 
       const m = L.marker([destination.lat, destination.lng], { icon: destIcon });
       m.bindPopup(`
         <div style="padding: 10px 14px; min-width: 170px;">
           <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: #64748b; letter-spacing: 0.5px;">Destination</div>
-          <div style="font-size: 14px; font-weight: 600; color: #0f172a; margin-top: 2px;">${destination.name}</div>
+          <div style="font-size: 14px; font-weight: 700; color: #0f172a; margin-top: 2px;">${destination.name}</div>
           <div style="font-size: 12px; color: #64748b; margin-top: 2px;">${destination.displayName}</div>
         </div>
       `);
@@ -184,16 +236,16 @@ export default function InteractiveMap({
 
       // Route styling
       let strokeColor = '#64748b'; // default slate
-      let strokeOpacity = 0.65;
-      let strokeWeight = 4;
+      let strokeOpacity = 0.7;
+      let strokeWeight = 4.5;
 
       if (isRecommended) {
         strokeColor = '#059669'; // Emerald
-        strokeWeight = isSelected ? 6.5 : 4.5;
-        strokeOpacity = isSelected ? 0.95 : 0.75;
+        strokeWeight = isSelected ? 7 : 5;
+        strokeOpacity = isSelected ? 0.95 : 0.8;
       } else if (isSelected) {
         strokeColor = '#0284c7'; // Active secondary
-        strokeWeight = 6;
+        strokeWeight = 6.5;
         strokeOpacity = 0.95;
       }
 
@@ -202,7 +254,7 @@ export default function InteractiveMap({
         const casing = L.polyline(route.coordinates, {
           color: '#ffffff',
           weight: strokeWeight + 3.5,
-          opacity: 0.9,
+          opacity: 0.95,
           lineCap: 'round',
           lineJoin: 'round',
         });
@@ -241,7 +293,7 @@ export default function InteractiveMap({
           else if (aqi > 50) dotColor = '#f59e0b'; // Moderate
 
           const circle = L.circleMarker([sample.lat, sample.lng], {
-            radius: 6,
+            radius: 6.5,
             fillColor: dotColor,
             color: '#ffffff',
             weight: 2,
@@ -314,16 +366,53 @@ export default function InteractiveMap({
       {/* Map DOM Container */}
       <div ref={mapContainerRef} className="w-full h-full" />
 
-      {/* Floating Header Info Badge */}
+      {/* Floating Header Info Badge (Top Left) */}
       <div className="absolute top-3 left-3 z-[400] flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/95 backdrop-blur-sm border border-slate-200 shadow-sm text-xs font-medium text-slate-700">
         <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
-        <span>Uttar Pradesh Boundary Active</span>
+        <span className="font-semibold text-slate-900">Uttar Pradesh Detailed Map</span>
         <span className="text-slate-400">|</span>
-        <span className="text-slate-500">CartoDB Positron</span>
+        <span className="text-emerald-700 font-medium">All Cities & Towns Labeled</span>
       </div>
 
-      {/* Floating Map Action Controls */}
+      {/* Floating Map Action Controls & Layer Switcher (Top Right) */}
       <div className="absolute top-3 right-14 z-[400] flex items-center gap-1.5">
+        {/* Layer Switcher Buttons */}
+        <div className="flex items-center rounded-lg bg-white/95 border border-slate-200 shadow-sm p-0.5 text-xs font-medium">
+          <button
+            onClick={() => switchBaseLayer('osm')}
+            title="OpenStreetMap: Full labels for all cities, towns, roads, villages"
+            className={`px-2.5 py-1 rounded-md transition-all ${
+              activeBaseLayer === 'osm'
+                ? 'bg-emerald-700 text-white font-bold shadow-sm'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            Detailed Map
+          </button>
+          <button
+            onClick={() => switchBaseLayer('esri_street')}
+            title="Esri Streets: Navigation Highway Map"
+            className={`px-2.5 py-1 rounded-md transition-all ${
+              activeBaseLayer === 'esri_street'
+                ? 'bg-emerald-700 text-white font-bold shadow-sm'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            Streets
+          </button>
+          <button
+            onClick={() => switchBaseLayer('satellite')}
+            title="Satellite with City & Highway Labels"
+            className={`px-2.5 py-1 rounded-md transition-all ${
+              activeBaseLayer === 'satellite'
+                ? 'bg-emerald-700 text-white font-bold shadow-sm'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            Satellite
+          </button>
+        </div>
+
         <button
           onClick={handleFitRoute}
           disabled={routes.length === 0}
