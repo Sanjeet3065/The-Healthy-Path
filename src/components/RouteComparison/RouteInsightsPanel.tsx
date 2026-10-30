@@ -70,15 +70,15 @@ export default function RouteInsightsPanel({
   const waypoints = selectedRoute.pollution.sampledReadings || [];
 
   return (
-    <div className="rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-soft overflow-hidden transition-colors duration-200">
+    <div className="rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-soft overflow-hidden transition-colors duration-200 w-full min-w-0 max-w-full">
       {/* Header with Navigation Tabs */}
-      <div className="border-b border-slate-100 dark:border-slate-800/80 p-3 sm:p-4 bg-slate-50/50 dark:bg-slate-900/50">
-        <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+      <div className="border-b border-slate-100 dark:border-slate-800/80 p-3 sm:p-4 bg-slate-50/50 dark:bg-slate-900/50 w-full min-w-0">
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5 w-full min-w-0">
           <div className="flex items-center gap-2 min-w-0">
             <span className="p-1.5 rounded-lg bg-emerald-100/70 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-400 shrink-0">
               <HeartPulse className="h-4 w-4" />
             </span>
-            <div>
+            <div className="min-w-0">
               <h3 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 truncate">
                 Route Environmental & Health Insights
               </h3>
@@ -96,44 +96,44 @@ export default function RouteInsightsPanel({
         </div>
 
         {/* 3 Tab Switchers */}
-        <div className="grid grid-cols-3 gap-1 p-0.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold">
+        <div className="grid grid-cols-3 gap-1 p-0.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold w-full min-w-0">
           <button
             type="button"
             onClick={() => setActiveTab('advisory')}
-            className={`py-2 px-1 sm:px-2 min-h-[38px] sm:min-h-[34px] rounded-md transition-all flex items-center justify-center text-center truncate ${
+            className={`py-2 px-1 sm:px-2 min-h-[38px] sm:min-h-[34px] rounded-md transition-all flex items-center justify-center text-center truncate min-w-0 ${
               activeTab === 'advisory'
                 ? 'bg-white dark:bg-slate-900 text-emerald-800 dark:text-emerald-400 font-bold shadow-2xs'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
             }`}
           >
-            <span><span className="hidden min-[380px]:inline">Commuter </span>Advisory</span>
+            <span className="truncate"><span className="hidden min-[380px]:inline">Commuter </span>Advisory</span>
           </button>
           <button
             type="button"
             onClick={() => setActiveTab('waypoints')}
-            className={`py-2 px-1 sm:px-2 min-h-[38px] sm:min-h-[34px] rounded-md transition-all flex items-center justify-center text-center truncate ${
+            className={`py-2 px-1 sm:px-2 min-h-[38px] sm:min-h-[34px] rounded-md transition-all flex items-center justify-center text-center truncate min-w-0 ${
               activeTab === 'waypoints'
                 ? 'bg-white dark:bg-slate-900 text-emerald-800 dark:text-emerald-400 font-bold shadow-2xs'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
             }`}
           >
-            <span>Waypoints ({waypoints.length})</span>
+            <span className="truncate">Waypoints ({waypoints.length})</span>
           </button>
           <button
             type="button"
             onClick={() => setActiveTab('helpline')}
-            className={`py-2 px-1 sm:px-2 min-h-[38px] sm:min-h-[34px] rounded-md transition-all flex items-center justify-center text-center truncate ${
+            className={`py-2 px-1 sm:px-2 min-h-[38px] sm:min-h-[34px] rounded-md transition-all flex items-center justify-center text-center truncate min-w-0 ${
               activeTab === 'helpline'
                 ? 'bg-white dark:bg-slate-900 text-emerald-800 dark:text-emerald-400 font-bold shadow-2xs'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
             }`}
           >
-            <span><span className="hidden min-[380px]:inline">Emergency & </span>Helplines</span>
+            <span className="truncate"><span className="hidden min-[380px]:inline">Emergency & </span>Helplines</span>
           </button>
         </div>
       </div>
 
-      <div className="p-3 sm:p-4 space-y-3.5">
+      <div className="p-3 sm:p-4 space-y-3.5 w-full min-w-0">
         {/* TAB 1: COMMUTER HEALTH & SAFETY ADVISORY */}
         {activeTab === 'advisory' && (
           <div className="space-y-3">

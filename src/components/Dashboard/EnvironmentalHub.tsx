@@ -68,7 +68,7 @@ export default function EnvironmentalHub({ onSelectCity }: EnvironmentalHubProps
   ];
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-soft overflow-hidden transition-colors duration-200">
+    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-soft overflow-hidden transition-colors duration-200 w-full min-w-0 max-w-full">
       {/* Sleek Minimalist Tab Header */}
       <div className="border-b border-slate-100 dark:border-slate-800 px-3 sm:px-4 md:px-5 py-2.5 sm:py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 bg-slate-50/50 dark:bg-slate-950/40">
         <div className="grid grid-cols-3 sm:flex sm:items-center gap-1 p-1 rounded-lg bg-slate-200/60 dark:bg-slate-800/80 text-xs font-semibold w-full sm:w-auto">

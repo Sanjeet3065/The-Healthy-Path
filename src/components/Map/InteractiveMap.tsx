@@ -383,12 +383,12 @@ export default function InteractiveMap({
 
   return (
     <div
-      className={`relative w-full h-[320px] xs:h-[350px] sm:h-[400px] md:h-[460px] lg:h-full lg:min-h-[510px] rounded-xl overflow-hidden border border-slate-200/80 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 shadow-soft transition-colors duration-200 ${
+      className={`relative w-full min-w-0 max-w-full h-[320px] xs:h-[350px] sm:h-[400px] md:h-[460px] lg:h-full lg:min-h-[510px] rounded-xl overflow-hidden border border-slate-200/80 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 shadow-soft transition-colors duration-200 ${
         className || ''
       }`}
     >
       {/* Map DOM Container */}
-      <div ref={mapContainerRef} className="w-full h-full" />
+      <div ref={mapContainerRef} className="w-full h-full overflow-hidden" />
 
       {/* Floating Indicator (Top Left) */}
       <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-[400] flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded-md bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/80 dark:border-slate-700/80 shadow-xs text-[10px] sm:text-[11px] font-semibold text-slate-800 dark:text-slate-200">

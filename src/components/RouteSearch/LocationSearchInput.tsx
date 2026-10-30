@@ -204,29 +204,29 @@ export default function LocationSearchInput({
 
   return (
     <div
-      className={`bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 p-3.5 sm:p-5 shadow-soft transition-colors duration-200 ${
+      className={`bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 p-3 sm:p-4 md:p-5 shadow-soft transition-colors duration-200 w-full min-w-0 max-w-full ${
         className || ''
       }`}
     >
-      <div className="flex items-center justify-between mb-3">
-        <h2 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
-          <Compass className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-          <span>Plan Route</span>
+      <div className="flex items-center justify-between mb-3 w-full min-w-0">
+        <h2 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5 min-w-0">
+          <Compass className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+          <span className="truncate">Plan Route</span>
         </h2>
-        <span className="text-[11px] sm:text-xs text-slate-400 dark:text-slate-500">Uttar Pradesh</span>
+        <span className="text-[11px] sm:text-xs text-slate-400 dark:text-slate-500 shrink-0">Uttar Pradesh</span>
       </div>
 
       {/* Travel Mode Selector (Feature: Commuter Calibration) */}
-      <div className="mb-3.5 p-1.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/70">
+      <div className="mb-3.5 p-1.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/70 w-full min-w-0">
         <div className="text-[10px] font-semibold text-slate-400 dark:text-slate-400 uppercase tracking-wider px-1 mb-1 flex items-center justify-between">
           <span>Travel Mode</span>
           <span className="text-[10px] text-slate-500 dark:text-slate-400 font-normal hidden sm:inline">Calibrates Inhalation</span>
         </div>
-        <div className="grid grid-cols-3 gap-1 sm:gap-1.5">
+        <div className="grid grid-cols-3 gap-1 sm:gap-1.5 w-full min-w-0">
           <button
             type="button"
             onClick={() => onSelectTravelMode?.('car')}
-            className={`py-2 px-1 sm:px-2 min-h-[42px] sm:min-h-[38px] rounded-lg text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 sm:gap-1.5 transition-all ${
+            className={`py-2 px-1 sm:px-2 min-h-[42px] sm:min-h-[38px] rounded-lg text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 sm:gap-1.5 transition-all min-w-0 overflow-hidden ${
               travelMode === 'car'
                 ? 'bg-white dark:bg-slate-700/90 text-emerald-800 dark:text-emerald-300 shadow-xs border border-emerald-300 dark:border-emerald-500 font-bold'
                 : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-slate-700/50 border border-transparent'
@@ -239,7 +239,7 @@ export default function LocationSearchInput({
           <button
             type="button"
             onClick={() => onSelectTravelMode?.('bike')}
-            className={`py-2 px-1 sm:px-2 min-h-[42px] sm:min-h-[38px] rounded-lg text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 sm:gap-1.5 transition-all ${
+            className={`py-2 px-1 sm:px-2 min-h-[42px] sm:min-h-[38px] rounded-lg text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 sm:gap-1.5 transition-all min-w-0 overflow-hidden ${
               travelMode === 'bike'
                 ? 'bg-white dark:bg-slate-700/90 text-emerald-800 dark:text-emerald-300 shadow-xs border border-emerald-300 dark:border-emerald-500 font-bold'
                 : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-slate-700/50 border border-transparent'
@@ -252,7 +252,7 @@ export default function LocationSearchInput({
           <button
             type="button"
             onClick={() => onSelectTravelMode?.('bicycle')}
-            className={`py-2 px-1 sm:px-2 min-h-[42px] sm:min-h-[38px] rounded-lg text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 sm:gap-1.5 transition-all ${
+            className={`py-2 px-1 sm:px-2 min-h-[42px] sm:min-h-[38px] rounded-lg text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 sm:gap-1.5 transition-all min-w-0 overflow-hidden ${
               travelMode === 'bicycle'
                 ? 'bg-white dark:bg-slate-700/90 text-emerald-800 dark:text-emerald-300 shadow-xs border border-emerald-300 dark:border-emerald-500 font-bold'
                 : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-slate-700/50 border border-transparent'
@@ -262,11 +262,13 @@ export default function LocationSearchInput({
             <span className="truncate">Bicycle</span>
           </button>
         </div>
-        <div className="mt-1.5 px-1 text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
-          {travelMode === 'car' && <span>Cabin air filter active • Lower direct PM exposure (0.8x)</span>}
-          {travelMode === 'bike' && <span>Direct road dust & exhaust exposure (~1.25x inhalation)</span>}
-          {travelMode === 'bicycle' && <span>High respiration rate on active commute (~1.45x intake)</span>}
+        <div className="mt-1.5 px-1 text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 flex items-start gap-1.5 leading-snug w-full min-w-0">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0 mt-1" />
+          <div className="min-w-0 flex-1 leading-snug">
+            {travelMode === 'car' && <span>Cabin air filter active • Lower direct PM exposure (0.8x)</span>}
+            {travelMode === 'bike' && <span>Direct road dust & exhaust exposure (~1.25x inhalation)</span>}
+            {travelMode === 'bicycle' && <span>High respiration rate on active commute (~1.45x intake)</span>}
+          </div>
         </div>
       </div>
 
@@ -475,7 +477,7 @@ export default function LocationSearchInput({
         <Button
           onClick={onSearchRoutes}
           disabled={!isFormValid || isLoading}
-          className="w-full mt-2 py-3 px-3 h-auto min-h-[44px] bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm rounded-lg shadow-sm transition-all flex items-center justify-center gap-2"
+          className="w-full mt-2 py-3 px-2 sm:px-3 h-auto min-h-[44px] bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm rounded-lg shadow-sm transition-all flex items-center justify-center gap-2 max-w-full"
         >
           {isLoading ? (
             <>
@@ -492,19 +494,19 @@ export default function LocationSearchInput({
       </div>
 
       {/* Quick Example Trips Across UP */}
-      <div className="mt-auto pt-3.5 border-t border-slate-100 dark:border-slate-800">
+      <div className="mt-auto pt-3.5 border-t border-slate-100 dark:border-slate-800 w-full min-w-0">
         <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider block mb-2">
           Popular UP Travel Corridors
         </span>
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-1.5 w-full min-w-0">
           {presets.map((p) => (
             <button
               key={`${p.from}-${p.to}`}
               type="button"
               onClick={() => handleApplyPreset(p)}
-              className="text-xs px-2.5 py-1.5 min-h-[32px] flex items-center rounded-md bg-slate-100 dark:bg-slate-800/90 hover:bg-emerald-50 dark:hover:bg-emerald-950/60 hover:text-emerald-800 dark:hover:text-emerald-300 border border-slate-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-300 transition-colors"
+              className="text-xs px-2.5 py-1.5 min-h-[32px] flex items-center rounded-md bg-slate-100 dark:bg-slate-800/90 hover:bg-emerald-50 dark:hover:bg-emerald-950/60 hover:text-emerald-800 dark:hover:text-emerald-300 border border-slate-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-300 transition-colors max-w-full"
             >
-              {p.from} → {p.to}
+              <span className="truncate">{p.from} → {p.to}</span>
             </button>
           ))}
         </div>
