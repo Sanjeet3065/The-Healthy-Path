@@ -5,6 +5,9 @@
 </p>
 
 <p align="center">
+  <a href="https://the-healthy-path.vercel.app/">
+    <img src="https://img.shields.io/badge/Live%20Demo-the--healthy--path.vercel.app-059669?style=for-the-badge&logo=vercel" alt="Live Demo" />
+  </a>
   <img src="https://img.shields.io/badge/Statewide%20Coverage-75%20Districts%20of%20UP-059669?style=for-the-badge" alt="75 Districts of Uttar Pradesh" />
   <img src="https://img.shields.io/badge/Routing-OSRM%20Alternatives-0284c7?style=for-the-badge" alt="OSRM Routing Engine" />
   <img src="https://img.shields.io/badge/Air%20Quality-Copernicus%20CAMS%20%26%20Open--Meteo-0f766e?style=for-the-badge" alt="Copernicus Atmospheric Reanalysis" />
@@ -12,22 +15,28 @@
 
 ---
 
+## 🌐 Live Web Application
+
+**Live URL:** [https://the-healthy-path.vercel.app/](https://the-healthy-path.vercel.app/)
+
+---
+
 ## 🎯 Overview
 
-Most navigation applications optimize exclusively for travel time or distance. In heavily industrialized or traffic-congested regions, the fastest route is frequently the most hazardous to human respiratory health, funneling commuters directly through dense particulate plumes, construction dust, and freight diesel emissions.
+Most navigation applications optimize exclusively for travel time or distance. In heavily industrialized or traffic-congested corridors, the fastest highway is frequently the most hazardous to human respiratory health, funneling commuters directly through dense particulate plumes, construction dust, and freight diesel emissions.
 
 **The Healthy Path** transforms travel planning across **all 75 districts, cities, towns, and villages of Uttar Pradesh**. It compares multiple road routes between any two locations in the state, samples atmospheric air quality point-by-point along available corridors, and recommends the path with the **lowest estimated cumulative pollution exposure**.
 
 ---
 
-## 🚀 Key Upgrades in Version 2.0
+## 🚀 Key Features & Capabilities
 
-### 1. Complete Uttar Pradesh Statewide Search Coverage
+### 1. Statewide Uttar Pradesh Search Coverage
 - **Dynamic Geocoding**: Search any district, city, kasba, rural village, neighborhood, railway station, or landmark across UP.
 - **75 UP Districts Instant Index**: Zero-latency autocomplete for all 75 Uttar Pradesh administrative districts and tehsils.
 - **Official State Boundary Validation**: Integrated GeoJSON MultiPolygon boundary with a ray-casting point-in-polygon verification algorithm. Locations outside Uttar Pradesh are clearly flagged with friendly explanations.
 
-### 2. Multi-Route Generation Engine
+### 2. Multi-Route Generation & Comparison Engine
 - **Real Road Geometries**: Powered by OpenStreetMap and OSRM (Open Source Routing Machine).
 - **Alternative Corridors**: Evaluates multiple alternative driving paths (e.g., Expressways vs. National Highways vs. Regional Bypasses).
 - **Accurate Distance & Duration**: Preserves actual road winding, highway legs, and driving duration.
@@ -48,9 +57,19 @@ Most navigation applications optimize exclusively for travel time or distance. I
 - **Interactive AQI Waypoint Dots**: Clickable sampled pollution markers along the route displaying localized PM2.5, PM10, NO2, AQI, and data timestamps.
 
 ### 5. Statewide Live AQI Monitor & Guides
-- **Live Regional Snapshot**: Real-time air quality monitor across 12 major UP urban centers (Lucknow, Kanpur, Varanasi, Prayagraj, Agra, Noida, Gorakhpur, Bareilly, Meerut, Ayodhya, Jhansi, Moradabad) with click-to-route integration.
+- **Live Regional Snapshot**: Real-time air quality monitor across major UP urban centers (Lucknow, Kanpur, Varanasi, Prayagraj, Agra, Noida, Gorakhpur, Bareilly, Meerut, Ayodhya, Jhansi, Moradabad) with click-to-route integration.
 - **National Air Quality Index (NAQI) Guide**: Official Central Pollution Control Board (CPCB) category definitions (Good, Satisfactory, Moderate, Poor, Very Poor, Severe) and commuter health precautions.
 - **Methodology & Data Transparency**: Comprehensive 5-step explanation distinguishing modeled atmospheric reanalysis from fixed CAAQMS sensor towers.
+
+### 6. Full Cross-Device Responsive Optimization
+- **Seamless Responsiveness**: Fully tested and optimized across all viewports:
+  - **Small Mobile**: 320px, 360px, 375px
+  - **Standard / Large Mobile**: 390px, 414px, 430px
+  - **Tablet**: 600px, 768px, 820px, 1024px
+  - **Laptop & Desktop**: 1280px, 1440px, 1920px+
+- **Fluid Layouts**: Responsive city cards adapting seamlessly from 1 column on mobile to 4 columns on desktop without text clipping or horizontal overflow.
+- **Balanced Mobile Hero**: Center-aligned mobile hero heading keeping phrases cleanly structured across viewports.
+- **Dark & Light Mode**: Built-in system/dark/light theme toggle with consistent contrast ratios and smooth transitions.
 
 ---
 
