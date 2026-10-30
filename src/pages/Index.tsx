@@ -1,14 +1,22 @@
 import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
+import Footer from '@/components/Footer';
 import InteractiveMap from '@/components/Map/InteractiveMap';
 import LocationSearchInput from '@/components/RouteSearch/LocationSearchInput';
 import RouteComparisonPanel from '@/components/RouteComparison/RouteComparisonPanel';
 import EnvironmentalHub from '@/components/Dashboard/EnvironmentalHub';
 import { reverseGeocodeLocation, type LocationItem } from '@/lib/geocoding';
 import { fetchAlternativeRoutes } from '@/lib/routing';
-import { evaluateRoutesPollution, type EvaluatedRoute } from '@/lib/pollution-service';
-import { AlertCircle, Leaf, Compass } from 'lucide-react';
+import {
+  evaluateRoutesPollution,
+  fetchCorridorAtmosphere,
+  type EvaluatedRoute,
+  type TravelMode,
+  type CorridorWeather,
+} from '@/lib/pollution-service';
+import { UP_DISTRICTS } from '@/lib/up-districts';
+import { AlertCircle, Compass } from 'lucide-react';
 
 export default function Index() {
   // Default to Lucknow -> Kanpur as initial showcase
@@ -38,6 +46,8 @@ export default function Index() {
     isWithinUP: true,
   });
 
+  const [travelMode, setTravelMode] = useState<TravelMode>('car');
+  const [corridorAtmosphere, setCorridorAtmosphere] = useState<CorridorWeather | null>(null);
   const [routes, setRoutes] = useState<EvaluatedRoute[]>([]);
   const [selectedRouteId, setSelectedRouteId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -59,7 +69,12 @@ export default function Index() {
     setErrorMsg(null);
 
     try {
-      const rawRoutes = await fetchAlternativeRoutes(origin, destination);
+      const [rawRoutes, weather] = await Promise.all([
+        fetchAlternativeRoutes(origin, destination),
+        fetchCorridorAtmosphere(origin.lat, origin.lng),
+      ]);
+
+      setCorridorAtmosphere(weather);
 
       if (!rawRoutes || rawRoutes.length === 0) {
         setErrorMsg('Could not find road path. Please try another location.');
@@ -68,7 +83,7 @@ export default function Index() {
         return;
       }
 
-      const evaluated = await evaluateRoutesPollution(rawRoutes);
+      const evaluated = await evaluateRoutesPollution(rawRoutes, travelMode);
       setRoutes(evaluated);
 
       const recommended = evaluated.find((r) => r.pollution?.recommendation === 'recommended');
@@ -78,6 +93,60 @@ export default function Index() {
       setErrorMsg('Unable to analyze routes at this moment. Please retry.');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // Recalibrate when travel mode is switched
+  const handleSelectTravelMode = async (mode: TravelMode) => {
+    setTravelMode(mode);
+    if (routes.length > 0) {
+      setIsLoading(true);
+      try {
+        const reEvaluated = await evaluateRoutesPollution(routes, mode);
+        setRoutes(reEvaluated);
+        const recommended = reEvaluated.find((r) => r.pollution?.recommendation === 'recommended');
+        setSelectedRouteId(recommended ? recommended.id : reEvaluated[0].id);
+      } catch (err) {
+        console.error('Recalibration error:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  // Handle corridor preset selection from footer or presets
+  const handleSelectCorridor = (fromName: string, toName: string) => {
+    const fromDist = UP_DISTRICTS.find((d) => d.name.toLowerCase().includes(fromName.toLowerCase()));
+    const toDist = UP_DISTRICTS.find((d) => d.name.toLowerCase().includes(toName.toLowerCase()));
+
+    if (fromDist) {
+      setOrigin({
+        id: `dist-${fromDist.id}`,
+        name: fromDist.name,
+        displayName: `${fromDist.name}, Uttar Pradesh`,
+        lat: fromDist.lat,
+        lng: fromDist.lng,
+        district: fromDist.name,
+        state: 'Uttar Pradesh',
+        country: 'India',
+        type: 'district',
+        isWithinUP: true,
+      });
+    }
+
+    if (toDist) {
+      setDestination({
+        id: `dist-${toDist.id}`,
+        name: toDist.name,
+        displayName: `${toDist.name}, Uttar Pradesh`,
+        lat: toDist.lat,
+        lng: toDist.lng,
+        district: toDist.name,
+        state: 'Uttar Pradesh',
+        country: 'India',
+        type: 'district',
+        isWithinUP: true,
+      });
     }
   };
 
@@ -100,6 +169,7 @@ export default function Index() {
     <div className="min-h-screen bg-slate-50/60 flex flex-col font-sans">
       <Navbar />
 
+      {/* Upgraded Compact Hero Section */}
       <HeroSection />
 
       <main className="container mx-auto px-4 py-6 space-y-6 flex-1">
@@ -122,6 +192,8 @@ export default function Index() {
                 onSelectDestination={setDestination}
                 onSearchRoutes={handleSearchRoutes}
                 isLoading={isLoading}
+                travelMode={travelMode}
+                onSelectTravelMode={handleSelectTravelMode}
               />
 
               {routes.length > 0 ? (
@@ -129,6 +201,9 @@ export default function Index() {
                   routes={routes}
                   selectedRouteId={selectedRouteId}
                   onSelectRoute={setSelectedRouteId}
+                  corridorAtmosphere={corridorAtmosphere}
+                  originName={origin?.name}
+                  destinationName={destination?.name}
                 />
               ) : (
                 !isLoading && (
@@ -169,21 +244,8 @@ export default function Index() {
         </section>
       </main>
 
-      {/* Clean Minimalist Footer */}
-      <footer className="border-t border-slate-200/80 bg-white py-5 text-xs text-slate-400">
-        <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-          <div className="flex items-center gap-2 text-slate-700 font-semibold">
-            <Leaf className="h-4 w-4 text-emerald-700" />
-            <span>The Healthy Path</span>
-            <span className="text-slate-300">•</span>
-            <span className="font-normal text-slate-500">Uttar Pradesh</span>
-          </div>
-
-          <p className="text-[11px]">
-            Data: OpenStreetMap • Project OSRM • Copernicus CAMS Atmospheric Reanalysis
-          </p>
-        </div>
-      </footer>
+      {/* Upgraded Compact Footer */}
+      <Footer onSelectCorridor={handleSelectCorridor} />
     </div>
   );
 }

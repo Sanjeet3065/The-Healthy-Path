@@ -1,5 +1,16 @@
 import type { RouteOption, SampledPoint } from './routing';
 
+export type TravelMode = 'car' | 'bike' | 'bicycle';
+
+export interface CorridorWeather {
+  temperature: number;
+  humidity: number;
+  windSpeed: number;
+  windDirection: number;
+  ventilationStatus: 'Good Dispersal' | 'Moderate Ventilation' | 'Stagnant Smog Trap';
+  ventilationNote: string;
+}
+
 export interface PollutionReading {
   lat: number;
   lng: number;
@@ -25,10 +36,11 @@ export interface RoutePollutionAnalysis {
   avgNo2: number;
   peakAqi: number;
   peakPm25: number;
-  cumulativeExposureIndex: number; // Integrated exposure = (Avg AQI * hours)
+  cumulativeExposureIndex: number; // Integrated exposure = (Avg AQI * hours * modeMultiplier)
   healthScore: number; // 0-100 (higher is cleaner & safer)
   recommendation: 'recommended' | 'moderate' | 'high_exposure';
   recommendationReason: string;
+  travelModeAdvice: string;
   confidenceLevel: 'copernicus_live' | 'sensor_model_hybrid' | 'regional_baseline';
   dataTimestamp: string;
 }
@@ -72,7 +84,10 @@ const CACHE_TTL_MS = 10 * 60 * 1000;
  * Batched retrieval of air quality readings along routes using Open-Meteo Air Quality API
  * (Copernicus Atmosphere Monitoring Service - CAMS European & Global Reanalysis).
  */
-export async function evaluateRoutesPollution(routes: RouteOption[]): Promise<EvaluatedRoute[]> {
+export async function evaluateRoutesPollution(
+  routes: RouteOption[],
+  travelMode: TravelMode = 'car'
+): Promise<EvaluatedRoute[]> {
   if (!routes || routes.length === 0) return [];
 
   // 1. Gather all sampled points from all routes
@@ -148,6 +163,19 @@ export async function evaluateRoutesPollution(routes: RouteOption[]): Promise<Ev
     }
   }
 
+  // Mode exposure factors
+  // Car: closed cabin + filter ~0.8
+  // Two-wheeler: direct unshielded exposure ~1.25
+  // Cycle: elevated breathing rate ~1.45
+  const modeMultiplier = travelMode === 'bike' ? 1.25 : travelMode === 'bicycle' ? 1.45 : 0.8;
+
+  const modeAdvice =
+    travelMode === 'bike'
+      ? '🛵 Two-Wheeler transit: Direct respiratory exposure to road exhaust. Wear an N95 anti-pollution mask.'
+      : travelMode === 'bicycle'
+      ? '🚴 Bicycle transit: High ventilation rate increases inhaled volume; green bypass corridors strongly advised.'
+      : '🚗 Car transit: Cabin filter provides ~20-30% attenuation if windows remain closed in traffic.';
+
   // 3. Analyze each route with its sampled points
   const analyzedRoutes = routes.map((route) => {
     const sampledReadings: {
@@ -207,14 +235,11 @@ export async function evaluateRoutesPollution(routes: RouteOption[]): Promise<Ev
     const avgPm10 = Number((totalPm10 / count).toFixed(1));
     const avgNo2 = Number((totalNo2 / count).toFixed(1));
 
-    // Cumulative exposure: concentration * time spent (in hours)
-    // Reflects true volume of air & pollutants inhaled into the lungs
+    // Cumulative exposure: concentration * time spent (in hours) * mode factor
     const hours = route.durationMins / 60;
-    const cumulativeExposureIndex = Number((avgAqi * hours).toFixed(1));
+    const cumulativeExposureIndex = Number((avgAqi * hours * modeMultiplier).toFixed(1));
 
     // Health Score: 0 to 100 scale.
-    // 100 = perfectly clean air, minimal exposure time.
-    // Penalized for high PM2.5, high AQI, and prolonged travel duration in smog.
     const rawHealth = 100 - (avgAqi * 0.35 + cumulativeExposureIndex * 0.18 + avgPm25 * 0.4);
     const healthScore = Math.max(12, Math.min(97, Math.round(rawHealth)));
 
@@ -230,6 +255,7 @@ export async function evaluateRoutesPollution(routes: RouteOption[]): Promise<Ev
       healthScore,
       recommendation: 'moderate',
       recommendationReason: '',
+      travelModeAdvice: modeAdvice,
       confidenceLevel: confidence,
       dataTimestamp: fetchedTimeStr,
     };
@@ -359,4 +385,53 @@ export async function fetchStatewideAqiSnapshots(): Promise<CityAqiSnapshot[]> {
     category: 'Satisfactory',
     updatedTime: 'Historical baseline',
   }));
+}
+
+/**
+ * Fetches corridor atmospheric and wind dispersal conditions for the route
+ */
+export async function fetchCorridorAtmosphere(lat: number, lng: number): Promise<CorridorWeather> {
+  try {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m`;
+    const resp = await fetch(url);
+    if (resp.ok) {
+      const data = await resp.json();
+      const cur = data.current || {};
+      const temp = Number((cur.temperature_2m ?? 24).toFixed(1));
+      const humidity = Math.round(cur.relative_humidity_2m ?? 65);
+      const windSpeed = Number((cur.wind_speed_10m ?? 12).toFixed(1));
+      const windDir = Math.round(cur.wind_direction_10m ?? 80);
+
+      let status: CorridorWeather['ventilationStatus'] = 'Moderate Ventilation';
+      let note = 'Moderate atmospheric ventilation along transit corridor.';
+
+      if (windSpeed >= 12) {
+        status = 'Good Dispersal';
+        note = 'Active wind speed is aiding rapid dispersion of vehicular particulate plumes.';
+      } else if (windSpeed <= 6) {
+        status = 'Stagnant Smog Trap';
+        note = 'Low wind speed is trapping road-level emissions; higher ground-level particulate concentration.';
+      }
+
+      return {
+        temperature: temp,
+        humidity,
+        windSpeed,
+        windDirection: windDir,
+        ventilationStatus: status,
+        ventilationNote: note,
+      };
+    }
+  } catch (e) {
+    console.warn('Corridor weather notice:', e);
+  }
+
+  return {
+    temperature: 24.5,
+    humidity: 68,
+    windSpeed: 11.2,
+    windDirection: 75,
+    ventilationStatus: 'Moderate Ventilation',
+    ventilationNote: 'Normal atmospheric air dispersal along highway corridor.',
+  };
 }

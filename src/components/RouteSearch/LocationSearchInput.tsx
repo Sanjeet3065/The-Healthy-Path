@@ -11,8 +11,12 @@ import {
   TreePine,
   Landmark,
   Compass,
+  Car,
+  Bike,
+  Activity,
 } from 'lucide-react';
 import { searchLocationsAcrossUP, type LocationItem } from '@/lib/geocoding';
+import type { TravelMode } from '@/lib/pollution-service';
 import { Button } from '@/components/ui/button';
 
 interface LocationSearchInputProps {
@@ -22,6 +26,8 @@ interface LocationSearchInputProps {
   onSelectDestination: (loc: LocationItem | null) => void;
   onSearchRoutes: () => void;
   isLoading: boolean;
+  travelMode?: TravelMode;
+  onSelectTravelMode?: (mode: TravelMode) => void;
 }
 
 export default function LocationSearchInput({
@@ -31,6 +37,8 @@ export default function LocationSearchInput({
   onSelectDestination,
   onSearchRoutes,
   isLoading,
+  travelMode = 'car',
+  onSelectTravelMode,
 }: LocationSearchInputProps) {
   // Text input state
   const [originQuery, setOriginQuery] = useState(origin?.name || '');
@@ -194,12 +202,66 @@ export default function LocationSearchInput({
 
   return (
     <div className="bg-white rounded-xl border border-slate-200/80 p-5 shadow-soft">
-      <div className="flex items-center justify-between mb-3.5">
+      <div className="flex items-center justify-between mb-3">
         <h2 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
           <Compass className="h-4 w-4 text-emerald-600" />
           <span>Plan Route</span>
         </h2>
         <span className="text-xs text-slate-400">Uttar Pradesh</span>
+      </div>
+
+      {/* Travel Mode Selector (Feature: Commuter Calibration) */}
+      <div className="mb-4 p-1.5 rounded-lg bg-slate-50 border border-slate-200/80">
+        <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider px-1 mb-1 flex items-center justify-between">
+          <span>Travel Mode</span>
+          <span className="text-[10px] text-slate-500 font-normal">Calibrates Particulate Inhalation</span>
+        </div>
+        <div className="grid grid-cols-3 gap-1">
+          <button
+            type="button"
+            onClick={() => onSelectTravelMode?.('car')}
+            className={`py-1.5 px-2 rounded-md text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
+              travelMode === 'car'
+                ? 'bg-white text-emerald-800 shadow-xs border border-emerald-300 font-bold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 border border-transparent'
+            }`}
+          >
+            <Car className="h-3.5 w-3.5" />
+            <span>Car / Cab</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => onSelectTravelMode?.('bike')}
+            className={`py-1.5 px-2 rounded-md text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
+              travelMode === 'bike'
+                ? 'bg-white text-emerald-800 shadow-xs border border-emerald-300 font-bold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 border border-transparent'
+            }`}
+          >
+            <Bike className="h-3.5 w-3.5" />
+            <span>Two-Wheeler</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => onSelectTravelMode?.('bicycle')}
+            className={`py-1.5 px-2 rounded-md text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
+              travelMode === 'bicycle'
+                ? 'bg-white text-emerald-800 shadow-xs border border-emerald-300 font-bold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 border border-transparent'
+            }`}
+          >
+            <Activity className="h-3.5 w-3.5" />
+            <span>Bicycle</span>
+          </button>
+        </div>
+        <div className="mt-1.5 px-1 text-[11px] text-slate-500 flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+          {travelMode === 'car' && <span>Cabin air filter active • Lower direct PM exposure (0.8x)</span>}
+          {travelMode === 'bike' && <span>Direct road dust & exhaust exposure (~1.25x inhalation)</span>}
+          {travelMode === 'bicycle' && <span>High respiration rate on active commute (~1.45x intake)</span>}
+        </div>
       </div>
 
       {/* Input Group with Swap Button */}
