@@ -103,7 +103,7 @@ export default function InteractiveMap({
       center: UP_CENTER,
       zoom: UP_DEFAULT_ZOOM,
       zoomControl: false,
-      attributionControl: true,
+      attributionControl: false,
       scrollWheelZoom: false, // Prevents mobile and trackpad scroll trap
     });
 

@@ -185,13 +185,9 @@
   background-color: #334155 !important;
 }
 
-.dark .leaflet-control-attribution {
-  background: rgba(15, 23, 42, 0.85) !important;
-  color: #94a3b8 !important;
-}
-
-.dark .leaflet-control-attribution a {
-  color: #34d399 !important;
+/* Hide bottom attribution bar completely */
+.leaflet-control-attribution {
+  display: none !important;
 }
 
 /* Clean, purposeful shadows */
