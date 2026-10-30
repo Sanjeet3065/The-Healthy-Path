@@ -166,13 +166,13 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/60 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
+    <div className="min-h-screen bg-slate-50/60 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200 w-full overflow-x-hidden">
       <Navbar />
 
       {/* Upgraded Compact Hero Section */}
       <HeroSection />
 
-      <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-5 sm:space-y-6 flex-1">
+      <main className="container mx-auto px-2.5 sm:px-4 md:px-6 py-3.5 sm:py-5 md:py-6 space-y-4 sm:space-y-6 flex-1 w-full max-w-7xl">
         {errorMsg && (
           <div className="p-3.5 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/60 text-xs text-red-800 dark:text-red-300 flex items-center gap-2">
             <AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400 flex-shrink-0" />

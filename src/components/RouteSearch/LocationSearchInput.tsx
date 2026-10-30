@@ -468,16 +468,16 @@ export default function LocationSearchInput({
         <Button
           onClick={onSearchRoutes}
           disabled={!isFormValid || isLoading}
-          className="w-full mt-2 py-3 bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white font-semibold text-sm rounded-lg shadow-sm transition-all flex items-center justify-center gap-2"
+          className="w-full mt-2 py-3 px-3 h-auto min-h-[44px] bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm rounded-lg shadow-sm transition-all flex items-center justify-center gap-2"
         >
           {isLoading ? (
             <>
-              <Loader2 className="h-4 w-4 animate-spin" />
-              <span>Analyzing Atmospheric Exposure...</span>
+              <Loader2 className="h-4 w-4 animate-spin shrink-0" />
+              <span className="truncate">Analyzing Atmospheric Exposure...</span>
             </>
           ) : (
             <>
-              <Search className="h-4 w-4" />
+              <Search className="h-4 w-4 shrink-0" />
               <span>Find Lowest Pollution Route</span>
             </>
           )}

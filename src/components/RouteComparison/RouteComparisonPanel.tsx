@@ -37,14 +37,14 @@ export default function RouteComparisonPanel({
     <div className="space-y-3">
       {/* Feature 2: Corridor Atmospheric Ventilation & Smog Dispersal */}
       {corridorAtmosphere && (
-        <div className="rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-3.5 shadow-soft transition-colors duration-200">
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-1.5 text-slate-800 dark:text-slate-100">
-              <Wind className="h-4 w-4 text-sky-600 dark:text-sky-400" />
-              <span className="text-xs font-bold">Atmospheric Smog Dispersal</span>
+        <div className="rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-3 sm:p-3.5 shadow-soft transition-colors duration-200">
+          <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-1.5 mb-2">
+            <div className="flex items-center gap-1.5 text-slate-800 dark:text-slate-100 min-w-0">
+              <Wind className="h-4 w-4 text-sky-600 dark:text-sky-400 shrink-0" />
+              <span className="text-xs font-bold truncate">Atmospheric Smog Dispersal</span>
             </div>
             <span
-              className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
+              className={`text-[10px] font-bold px-2 py-0.5 rounded-full border shrink-0 ${
                 corridorAtmosphere.ventilationStatus === 'Good Dispersal'
                   ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800/60'
                   : corridorAtmosphere.ventilationStatus === 'Stagnant Smog Trap'
@@ -56,18 +56,18 @@ export default function RouteComparisonPanel({
             </span>
           </div>
 
-          <div className="grid grid-cols-3 gap-2 py-1.5 px-2 rounded-md bg-slate-50 dark:bg-slate-800/60 text-center text-xs mb-2 border border-slate-100 dark:border-slate-800">
-            <div>
-              <span className="text-[10px] text-slate-400 dark:text-slate-400 block">Wind Speed</span>
-              <strong className="text-slate-800 dark:text-slate-200">{corridorAtmosphere.windSpeed} km/h</strong>
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-2 py-1.5 px-2 rounded-md bg-slate-50 dark:bg-slate-800/60 text-center text-xs mb-2 border border-slate-100 dark:border-slate-800">
+            <div className="min-w-0">
+              <span className="text-[10px] text-slate-400 dark:text-slate-400 block truncate">Wind Speed</span>
+              <strong className="text-slate-800 dark:text-slate-200 text-xs sm:text-sm block truncate">{corridorAtmosphere.windSpeed} km/h</strong>
             </div>
-            <div>
-              <span className="text-[10px] text-slate-400 dark:text-slate-400 block">Temperature</span>
-              <strong className="text-slate-800 dark:text-slate-200">{corridorAtmosphere.temperature}°C</strong>
+            <div className="min-w-0">
+              <span className="text-[10px] text-slate-400 dark:text-slate-400 block truncate">Temp</span>
+              <strong className="text-slate-800 dark:text-slate-200 text-xs sm:text-sm block truncate">{corridorAtmosphere.temperature}°C</strong>
             </div>
-            <div>
-              <span className="text-[10px] text-slate-400 dark:text-slate-400 block">Humidity</span>
-              <strong className="text-slate-800 dark:text-slate-200">{corridorAtmosphere.humidity}%</strong>
+            <div className="min-w-0">
+              <span className="text-[10px] text-slate-400 dark:text-slate-400 block truncate">Humidity</span>
+              <strong className="text-slate-800 dark:text-slate-200 text-xs sm:text-sm block truncate">{corridorAtmosphere.humidity}%</strong>
             </div>
           </div>
 
@@ -80,21 +80,21 @@ export default function RouteComparisonPanel({
       {/* Recommended Route Card (Cleanest Path) */}
       <div
         onClick={() => onSelectRoute(recommendedRoute.id)}
-        className={`rounded-xl border p-3.5 sm:p-5 transition-all cursor-pointer ${
+        className={`rounded-xl border p-3 sm:p-4 md:p-5 transition-all cursor-pointer ${
           selectedRouteId === recommendedRoute.id
             ? 'border-emerald-600 dark:border-emerald-500 bg-emerald-50/20 dark:bg-emerald-950/30 ring-1 ring-emerald-600 dark:ring-emerald-500 shadow-sm'
             : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-emerald-300 dark:hover:border-emerald-700 shadow-soft'
         }`}
       >
         <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5 min-w-0">
             <span className="w-2 h-2 rounded-full bg-emerald-600 dark:bg-emerald-500 shrink-0" />
-            <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400">
+            <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400 truncate">
               Cleanest Path
             </span>
           </div>
 
-          <span className="text-[11px] sm:text-xs font-bold px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/60">
+          <span className="text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/60 shrink-0">
             Score {recommendedRoute.pollution.healthScore}/100
           </span>
         </div>
@@ -103,28 +103,28 @@ export default function RouteComparisonPanel({
         <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mb-2.5 sm:mb-3">{recommendedRoute.summary}</p>
 
         {/* Responsive Metrics Strip */}
-        <div className="grid grid-cols-4 gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/60 text-center">
-          <div>
+        <div className="grid grid-cols-4 gap-1 sm:gap-2 py-2 sm:py-2.5 px-1 sm:px-3 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/60 text-center">
+          <div className="min-w-0">
             <span className="text-[9px] sm:text-[10px] text-slate-400 dark:text-slate-400 block truncate">Duration</span>
-            <span className="text-[11px] sm:text-xs font-bold text-slate-800 dark:text-slate-200">
+            <span className="text-[11px] sm:text-xs font-bold text-slate-800 dark:text-slate-200 block truncate">
               {recommendedRoute.durationMins}m
             </span>
           </div>
-          <div>
+          <div className="min-w-0">
             <span className="text-[9px] sm:text-[10px] text-slate-400 dark:text-slate-400 block truncate">Distance</span>
-            <span className="text-[11px] sm:text-xs font-bold text-slate-800 dark:text-slate-200">
+            <span className="text-[11px] sm:text-xs font-bold text-slate-800 dark:text-slate-200 block truncate">
               {recommendedRoute.distanceKm}km
             </span>
           </div>
-          <div>
+          <div className="min-w-0">
             <span className="text-[9px] sm:text-[10px] text-slate-400 dark:text-slate-400 block truncate">Avg AQI</span>
-            <span className="text-[11px] sm:text-xs font-bold text-emerald-700 dark:text-emerald-400">
+            <span className="text-[11px] sm:text-xs font-bold text-emerald-700 dark:text-emerald-400 block truncate">
               {recommendedRoute.pollution.avgAqi}
             </span>
           </div>
-          <div>
+          <div className="min-w-0">
             <span className="text-[9px] sm:text-[10px] text-slate-400 dark:text-slate-400 block truncate">PM2.5</span>
-            <span className="text-[11px] sm:text-xs font-bold text-slate-800 dark:text-slate-200">
+            <span className="text-[11px] sm:text-xs font-bold text-slate-800 dark:text-slate-200 block truncate">
               {recommendedRoute.pollution.avgPm25}
             </span>
           </div>
@@ -152,7 +152,7 @@ export default function RouteComparisonPanel({
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-md bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white text-xs font-semibold shadow-2xs transition-colors"
+              className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 sm:py-1.5 rounded-lg sm:rounded-md bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white text-xs font-semibold shadow-2xs transition-colors min-h-[40px] sm:min-h-[32px] w-full sm:w-auto"
             >
               <Navigation className="h-3.5 w-3.5" />
               <span>Open in Google Maps</span>
@@ -177,30 +177,30 @@ export default function RouteComparisonPanel({
               <div
                 key={route.id}
                 onClick={() => onSelectRoute(route.id)}
-                className={`rounded-xl border p-3.5 transition-all cursor-pointer ${
+                className={`rounded-xl border p-3 sm:p-3.5 transition-all cursor-pointer ${
                   isSelected
                     ? 'border-sky-600 dark:border-sky-500 bg-sky-50/20 dark:bg-sky-950/30 ring-1 ring-sky-600 dark:ring-sky-500 shadow-sm'
                     : 'border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700 shadow-soft'
                 }`}
               >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-bold text-slate-800 dark:text-slate-100">{route.name}</span>
+                <div className="flex items-center justify-between gap-2 mb-1.5">
+                  <span className="text-xs font-bold text-slate-800 dark:text-slate-100 truncate">{route.name}</span>
                   <span
-                    className={`text-[10px] font-semibold px-2 py-0.5 rounded ${
+                    className={`text-[10px] font-semibold px-2 py-0.5 rounded shrink-0 ${
                       isHigh
                         ? 'bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-900/60'
                         : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700'
                     }`}
                   >
-                    {isHigh ? 'Higher Pollution' : 'Moderate Exposure'}
+                    {isHigh ? 'Higher Pollution' : 'Moderate'}
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                  <span>
+                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 gap-2">
+                  <span className="truncate">
                     {route.durationMins} mins • {route.distanceKm} km
                   </span>
-                  <span>
+                  <span className="shrink-0">
                     Avg AQI <strong className="text-slate-800 dark:text-slate-200">{route.pollution.avgAqi}</strong>
                   </span>
                 </div>

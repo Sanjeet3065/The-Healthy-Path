@@ -70,75 +70,91 @@ export default function EnvironmentalHub({ onSelectCity }: EnvironmentalHubProps
   return (
     <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-soft overflow-hidden transition-colors duration-200">
       {/* Sleek Minimalist Tab Header */}
-      <div className="border-b border-slate-100 dark:border-slate-800 px-3.5 sm:px-5 py-2.5 sm:py-3 flex flex-wrap items-center justify-between gap-2.5 bg-slate-50/50 dark:bg-slate-950/40">
-        <div className="flex items-center gap-1 p-1 rounded-lg bg-slate-200/60 dark:bg-slate-800/80 text-xs font-semibold overflow-x-auto w-full sm:w-auto scrollbar-none">
+      <div className="border-b border-slate-100 dark:border-slate-800 px-3 sm:px-4 md:px-5 py-2.5 sm:py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 bg-slate-50/50 dark:bg-slate-950/40">
+        <div className="grid grid-cols-3 sm:flex sm:items-center gap-1 p-1 rounded-lg bg-slate-200/60 dark:bg-slate-800/80 text-xs font-semibold w-full sm:w-auto">
           <button
             onClick={() => setActiveTab('live_aqi')}
-            className={`px-2.5 sm:px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap text-[11px] sm:text-xs ${
+            className={`px-2 sm:px-3 py-1.5 rounded-md transition-all flex items-center justify-center gap-1.5 text-center text-[10px] sm:text-xs ${
               activeTab === 'live_aqi'
-                ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-xs'
+                ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-xs font-bold'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
             }`}
           >
             <Wind className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-            <span>Live <span className="hidden sm:inline">UP </span>Air Quality</span>
+            <span className="truncate">Live <span className="hidden min-[400px]:inline">UP </span>Air</span>
           </button>
 
           <button
             onClick={() => setActiveTab('methodology')}
-            className={`px-2.5 sm:px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap text-[11px] sm:text-xs ${
+            className={`px-2 sm:px-3 py-1.5 rounded-md transition-all flex items-center justify-center gap-1.5 text-center text-[10px] sm:text-xs ${
               activeTab === 'methodology'
-                ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-xs'
+                ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-xs font-bold'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
             }`}
           >
             <Calculator className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-            <span><span className="hidden sm:inline">How It's </span>Calculated</span>
+            <span className="truncate">How <span className="hidden min-[400px]:inline">It's </span>Calculated</span>
           </button>
 
           <button
             onClick={() => setActiveTab('standards')}
-            className={`px-2.5 sm:px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap text-[11px] sm:text-xs ${
+            className={`px-2 sm:px-3 py-1.5 rounded-md transition-all flex items-center justify-center gap-1.5 text-center text-[10px] sm:text-xs ${
               activeTab === 'standards'
-                ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-xs'
+                ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-xs font-bold'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
             }`}
           >
             <Shield className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-            <span>NAQI <span className="hidden sm:inline">Standards</span></span>
+            <span className="truncate">NAQI <span className="hidden min-[400px]:inline">Standards</span></span>
           </button>
         </div>
 
         {activeTab === 'live_aqi' && (
-          <button
-            onClick={loadData}
-            disabled={isLoading}
-            title="Refresh Live Data"
-            className="flex items-center gap-1 text-[11px] font-medium text-slate-500 dark:text-slate-400 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors ml-auto sm:ml-0"
-          >
-            <RefreshCw className={`h-3 w-3 ${isLoading ? 'animate-spin' : ''}`} />
-            <span>Refresh</span>
-          </button>
+          <div className="flex items-center justify-between sm:justify-end gap-2 text-[11px] pt-1 sm:pt-0 border-t sm:border-t-0 border-slate-100 dark:border-slate-800">
+            <span className="text-[10px] text-slate-400 dark:text-slate-500 hidden xs:inline sm:hidden">
+              Copernicus CAMS Live
+            </span>
+            <button
+              onClick={loadData}
+              disabled={isLoading}
+              title="Refresh Live Data"
+              className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-600 dark:text-slate-400 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors ml-auto sm:ml-0 px-2 py-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800"
+            >
+              <RefreshCw className={`h-3 w-3 ${isLoading ? 'animate-spin text-emerald-600' : ''}`} />
+              <span>Refresh Readings</span>
+            </button>
+          </div>
         )}
       </div>
 
-      {/* Tab 1: Live UP Air Quality Grid */}
+      {/* Tab 1: Live UP Air Quality Grid (Intelligently Responsive: 1 col on mobile, 2 cols on tablet, 3-4 on desktop) */}
       {activeTab === 'live_aqi' && (
-        <div className="p-3.5 sm:p-5 md:p-6">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
+        <div className="p-3 sm:p-4 md:p-5 lg:p-6">
+          <div className="grid grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3 lg:gap-3.5">
             {snapshots.map((city) => (
               <div
                 key={city.cityName}
                 onClick={() => handleCityClick(city)}
-                className="group p-2.5 sm:p-3 rounded-lg border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 hover:bg-white dark:hover:bg-slate-800 hover:border-emerald-300 dark:hover:border-emerald-600 hover:shadow-soft transition-all cursor-pointer"
+                className="group p-3 sm:p-3.5 rounded-xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900/90 hover:bg-slate-50/80 dark:hover:bg-slate-800/90 hover:border-emerald-400 dark:hover:border-emerald-500 hover:shadow-soft transition-all duration-200 cursor-pointer flex flex-col justify-between"
               >
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-[11px] sm:text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1 truncate">
-                    <Building2 className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 shrink-0" />
-                    <span className="truncate">{city.cityName}</span>
-                  </span>
+                {/* Top Row: City Icon + Name (never clipped or cut off) & Category Badge */}
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <div className="flex items-center gap-2 min-w-0 flex-1">
+                    <div className="w-7 h-7 rounded-lg bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-100 dark:border-emerald-900/60 flex items-center justify-center text-emerald-700 dark:text-emerald-400 shrink-0 group-hover:bg-emerald-100 dark:group-hover:bg-emerald-900/90 transition-colors">
+                      <Building2 className="h-3.5 w-3.5" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 leading-snug break-words">
+                        {city.cityName}
+                      </h4>
+                      <span className="text-[10px] text-slate-400 dark:text-slate-500 block leading-tight">
+                        Uttar Pradesh
+                      </span>
+                    </div>
+                  </div>
+
                   <span
-                    className={`text-[9px] font-bold px-1.5 py-0.5 rounded border shrink-0 ${getCategoryBadgeClass(
+                    className={`text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-full border shrink-0 whitespace-nowrap self-start ${getCategoryBadgeClass(
                       city.category
                     )}`}
                   >
@@ -146,30 +162,39 @@ export default function EnvironmentalHub({ onSelectCity }: EnvironmentalHubProps
                   </span>
                 </div>
 
-                <div className="flex items-baseline justify-between mt-1">
-                  <div>
-                    <span className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-slate-100">{city.aqi}</span>
-                    <span className="text-[9px] sm:text-[10px] text-slate-400 dark:text-slate-500 ml-1">AQI</span>
+                {/* Bottom Row: AQI Big Number & PM2.5 Metric */}
+                <div className="flex items-baseline justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80 mt-1">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-base sm:text-lg font-extrabold text-slate-900 dark:text-slate-50 font-display">
+                      {city.aqi}
+                    </span>
+                    <span className="text-[10px] sm:text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+                      AQI
+                    </span>
                   </div>
-                  <span className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 truncate">
-                    PM2.5: <strong className="text-slate-800 dark:text-slate-200">{city.pm25}</strong>
-                  </span>
+
+                  <div className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                    <span className="text-slate-400 dark:text-slate-500">PM2.5:</span>
+                    <strong className="text-slate-800 dark:text-slate-200 font-semibold">{city.pm25}</strong>
+                    <span className="text-[10px] text-slate-400 dark:text-slate-500 hidden min-[360px]:inline">µg/m³</span>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
-          <p className="text-[10px] sm:text-[11px] text-slate-400 dark:text-slate-500 text-center sm:text-right mt-3">
-            Copernicus CAMS & Open-Meteo Atmospheric Reanalysis • Click city to route
+
+          <p className="text-[10px] sm:text-[11px] text-slate-400 dark:text-slate-500 text-center sm:text-right mt-3 sm:mt-4">
+            Copernicus CAMS & Open-Meteo Atmospheric Reanalysis • Tap any city to route
           </p>
         </div>
       )}
 
       {/* Tab 2: Scientific Methodology (3 concise pillars) */}
       {activeTab === 'methodology' && (
-        <div className="p-5 md:p-6 space-y-4">
-          <div className="grid sm:grid-cols-3 gap-4">
-            <div className="p-4 rounded-lg bg-slate-50/70 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-              <span className="text-xs font-bold text-emerald-800 dark:text-emerald-400 block mb-1">
+        <div className="p-3.5 sm:p-5 md:p-6 space-y-3.5 sm:space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+            <div className="p-3.5 sm:p-4 rounded-xl bg-slate-50/80 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+              <span className="text-xs sm:text-sm font-bold text-emerald-800 dark:text-emerald-400 block mb-1">
                 1. Road Network Routing
               </span>
               <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -177,8 +202,8 @@ export default function EnvironmentalHub({ onSelectCity }: EnvironmentalHubProps
               </p>
             </div>
 
-            <div className="p-4 rounded-lg bg-slate-50/70 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-              <span className="text-xs font-bold text-emerald-800 dark:text-emerald-400 block mb-1">
+            <div className="p-3.5 sm:p-4 rounded-xl bg-slate-50/80 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+              <span className="text-xs sm:text-sm font-bold text-emerald-800 dark:text-emerald-400 block mb-1">
                 2. Point-by-Point Sampling
               </span>
               <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -186,8 +211,8 @@ export default function EnvironmentalHub({ onSelectCity }: EnvironmentalHubProps
               </p>
             </div>
 
-            <div className="p-4 rounded-lg bg-slate-50/70 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-              <span className="text-xs font-bold text-emerald-800 dark:text-emerald-400 block mb-1">
+            <div className="p-3.5 sm:p-4 rounded-xl bg-slate-50/80 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+              <span className="text-xs sm:text-sm font-bold text-emerald-800 dark:text-emerald-400 block mb-1">
                 3. Cumulative Inhalation Dose
               </span>
               <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -196,9 +221,9 @@ export default function EnvironmentalHub({ onSelectCity }: EnvironmentalHubProps
             </div>
           </div>
 
-          <div className="p-3 rounded-lg bg-emerald-50/60 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900/60 text-xs text-emerald-900 dark:text-emerald-200 flex items-center gap-2">
-            <Info className="h-4 w-4 text-emerald-700 dark:text-emerald-400 flex-shrink-0" />
-            <span>
+          <div className="p-3 rounded-lg bg-emerald-50/60 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900/60 text-xs text-emerald-900 dark:text-emerald-200 flex items-start gap-2">
+            <Info className="h-4 w-4 text-emerald-700 dark:text-emerald-400 shrink-0 mt-0.5" />
+            <span className="leading-relaxed">
               <strong>Scientific Transparency:</strong> For continuous highways and rural links without fixed CAAQMS physical towers, atmospheric reanalysis models blend satellite data with ground observations.
             </span>
           </div>
@@ -207,13 +232,13 @@ export default function EnvironmentalHub({ onSelectCity }: EnvironmentalHubProps
 
       {/* Tab 3: NAQI Standards & Health */}
       {activeTab === 'standards' && (
-        <div className="p-5 md:p-6 space-y-4">
+        <div className="p-3.5 sm:p-5 md:p-6 space-y-3.5 sm:space-y-4">
           {/* Visual Spectrum Bar */}
-          <div className="grid grid-cols-2 sm:grid-cols-6 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-2.5">
             {naqiLevels.map((lvl) => (
               <div key={lvl.label} className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 text-center">
                 <span className={`w-2.5 h-2.5 rounded-full ${lvl.color} inline-block mb-1`} />
-                <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block">{lvl.label}</span>
+                <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block truncate">{lvl.label}</span>
                 <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono block">{lvl.range} AQI</span>
                 <span className="text-[10px] text-slate-400 dark:text-slate-400 block mt-1 leading-tight">{lvl.desc}</span>
               </div>
@@ -221,7 +246,7 @@ export default function EnvironmentalHub({ onSelectCity }: EnvironmentalHubProps
           </div>
 
           {/* Practical Commuter Advice */}
-          <div className="grid sm:grid-cols-3 gap-3 pt-2 text-xs text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-3 text-xs text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800">
             <div>
               <strong className="text-slate-800 dark:text-slate-200 block mb-0.5">Two-Wheeler Riders:</strong>
               Use N95 respirators when commuting along high-traffic industrial corridors.
