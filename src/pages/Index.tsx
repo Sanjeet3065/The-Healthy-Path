@@ -182,11 +182,13 @@ export default function Index() {
         )}
 
         {/* Primary Route Planner Experience */}
-        <section id="route-planner" className="space-y-4">
-          <div className="grid lg:grid-cols-12 gap-4 sm:gap-5 items-start">
+        <section id="route-planner" className="space-y-4 sm:space-y-5">
+          {/* Top Row: Route Planner (Left) and Interactive Map (Right) - Perfectly Aligned Top & Equal Height */}
+          <div className="grid lg:grid-cols-12 gap-4 sm:gap-5 items-stretch">
             {/* Search Input (Top on Mobile, Left Column on Desktop) */}
-            <div className="lg:col-span-5 space-y-4">
+            <div className="lg:col-span-5 flex flex-col">
               <LocationSearchInput
+                className="h-full flex flex-col justify-between"
                 origin={origin}
                 destination={destination}
                 onSelectOrigin={setOrigin}
@@ -196,35 +198,12 @@ export default function Index() {
                 travelMode={travelMode}
                 onSelectTravelMode={handleSelectTravelMode}
               />
-
-              {/* Desktop-only Route Comparison (side-by-side with map) */}
-              <div className="hidden lg:block space-y-4">
-                {routes.length > 0 ? (
-                  <RouteComparisonPanel
-                    routes={routes}
-                    selectedRouteId={selectedRouteId}
-                    onSelectRoute={setSelectedRouteId}
-                    corridorAtmosphere={corridorAtmosphere}
-                    originName={origin?.name}
-                    destinationName={destination?.name}
-                  />
-                ) : (
-                  !isLoading && (
-                    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 p-6 text-center shadow-soft transition-colors duration-200">
-                      <Compass className="h-6 w-6 text-emerald-600 dark:text-emerald-400 mx-auto mb-2" />
-                      <h3 className="text-xs font-bold text-slate-800 dark:text-slate-100 mb-1">Select Locations</h3>
-                      <p className="text-xs text-slate-500 dark:text-slate-400">
-                        Choose any starting point and destination in Uttar Pradesh to compare route pollution.
-                      </p>
-                    </div>
-                  )
-                )}
-              </div>
             </div>
 
-            {/* Interactive Map & Route Insights (Right Column on Desktop) */}
-            <div className="lg:col-span-7 space-y-4">
+            {/* Interactive Map (Right Column on Desktop, directly below Planner on Mobile) */}
+            <div className="lg:col-span-7 flex flex-col">
               <InteractiveMap
+                className="h-full min-h-[320px] sm:min-h-[380px] md:min-h-[460px] lg:min-h-[510px]"
                 origin={origin}
                 destination={destination}
                 routes={routes}
@@ -232,9 +211,26 @@ export default function Index() {
                 onSelectRoute={setSelectedRouteId}
                 onMapClick={handleMapClick}
               />
+            </div>
+          </div>
 
-              {/* Desktop-only Route Environmental & Health Insights (Fills the space beneath the map) */}
-              <div className="hidden lg:block">
+          {/* Bottom Row: Route Comparison & Environmental Health Insights (Both start at same vertical position) */}
+          {routes.length > 0 ? (
+            <div className="grid lg:grid-cols-12 gap-4 sm:gap-5 items-start">
+              {/* Left Column (5 cols): Route Comparison (Cleanest Path, Smog Dispersal, Alternatives) */}
+              <div className="lg:col-span-5 space-y-4">
+                <RouteComparisonPanel
+                  routes={routes}
+                  selectedRouteId={selectedRouteId}
+                  onSelectRoute={setSelectedRouteId}
+                  corridorAtmosphere={corridorAtmosphere}
+                  originName={origin?.name}
+                  destinationName={destination?.name}
+                />
+              </div>
+
+              {/* Right Column (7 cols): Route Environmental & Health Insights */}
+              <div className="lg:col-span-7 space-y-4">
                 <RouteInsightsPanel
                   selectedRoute={routes.find((r) => r.id === selectedRouteId) || routes[0] || null}
                   routes={routes}
@@ -244,42 +240,18 @@ export default function Index() {
                   destinationName={destination?.name}
                 />
               </div>
-
-              {/* Mobile/Tablet Route Comparison & Insights (directly below the map for intuitive mobile UX) */}
-              <div className="block lg:hidden space-y-4">
-                {routes.length > 0 ? (
-                  <>
-                    <RouteComparisonPanel
-                      routes={routes}
-                      selectedRouteId={selectedRouteId}
-                      onSelectRoute={setSelectedRouteId}
-                      corridorAtmosphere={corridorAtmosphere}
-                      originName={origin?.name}
-                      destinationName={destination?.name}
-                    />
-                    <RouteInsightsPanel
-                      selectedRoute={routes.find((r) => r.id === selectedRouteId) || routes[0] || null}
-                      routes={routes}
-                      travelMode={travelMode}
-                      corridorAtmosphere={corridorAtmosphere}
-                      originName={origin?.name}
-                      destinationName={destination?.name}
-                    />
-                  </>
-                ) : (
-                  !isLoading && (
-                    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 p-5 text-center shadow-soft transition-colors duration-200">
-                      <Compass className="h-6 w-6 text-emerald-600 dark:text-emerald-400 mx-auto mb-2" />
-                      <h3 className="text-xs font-bold text-slate-800 dark:text-slate-100 mb-1">Select Locations</h3>
-                      <p className="text-xs text-slate-500 dark:text-slate-400">
-                        Choose any starting point and destination in Uttar Pradesh to compare route pollution.
-                      </p>
-                    </div>
-                  )
-                )}
-              </div>
             </div>
-          </div>
+          ) : (
+            !isLoading && (
+              <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 p-6 text-center shadow-soft transition-colors duration-200">
+                <Compass className="h-6 w-6 text-emerald-600 dark:text-emerald-400 mx-auto mb-2" />
+                <h3 className="text-xs font-bold text-slate-800 dark:text-slate-100 mb-1">Select Locations</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+                  Choose any starting point and destination in Uttar Pradesh to compare route pollution.
+                </p>
+              </div>
+            )
+          )}
         </section>
 
         {/* Unified Minimalist Environmental Intelligence Hub */}

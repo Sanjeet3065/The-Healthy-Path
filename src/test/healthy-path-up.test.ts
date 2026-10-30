@@ -153,5 +153,5 @@ describe('Pollution Evaluation & Recommendation Engine', () => {
     // Cumulative exposure index must be calculated
     expect(results[0].pollution.cumulativeExposureIndex).toBeGreaterThan(0);
     expect(results[0].pollution.recommendationReason.length).toBeGreaterThan(10);
-  });
+  }, 15000);
 });

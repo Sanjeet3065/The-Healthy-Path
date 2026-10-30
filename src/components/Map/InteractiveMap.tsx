@@ -12,6 +12,7 @@ interface InteractiveMapProps {
   selectedRouteId: string | null;
   onSelectRoute: (routeId: string) => void;
   onMapClick?: (lat: number, lng: number) => void;
+  className?: string;
 }
 
 // Uttar Pradesh default center & zoom
@@ -25,6 +26,7 @@ export default function InteractiveMap({
   selectedRouteId,
   onSelectRoute,
   onMapClick,
+  className,
 }: InteractiveMapProps) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
@@ -98,13 +100,18 @@ export default function InteractiveMap({
   useEffect(() => {
     if (!mapContainerRef.current || mapInstanceRef.current) return;
 
-    // Create Leaflet map instance with touch and wheel optimizations
+    // Create Leaflet map instance with smooth desktop wheel zoom and touch optimizations
     const map = L.map(mapContainerRef.current, {
       center: UP_CENTER,
       zoom: UP_DEFAULT_ZOOM,
       zoomControl: false,
       attributionControl: false,
-      scrollWheelZoom: false, // Prevents mobile and trackpad scroll trap
+      scrollWheelZoom: true, // Enables natural mouse-wheel zoom centered on cursor
+      wheelPxPerZoomLevel: 60, // Smooth, non-aggressive zoom delta calibration
+      wheelDebounceTime: 40, // Responsive debounce prevents abrupt zoom steps
+      doubleClickZoom: true, // Enables double-click zoom
+      touchZoom: true, // Preserves mobile pinch-to-zoom
+      dragging: true, // Preserves mouse drag & mobile pan
     });
 
     // Default: OpenStreetMap standard with full place names, towns, roads, villages
@@ -351,6 +358,7 @@ export default function InteractiveMap({
     // Auto-fit bounds to the selected route or all routes
     const activeRoute = routes.find((r) => r.id === selectedRouteId) || routes[0];
     if (activeRoute && activeRoute.coordinates.length > 0) {
+      map.invalidateSize();
       const bounds = L.latLngBounds(activeRoute.coordinates);
       map.fitBounds(bounds, { padding: [30, 30], maxZoom: 13 });
     }
@@ -367,13 +375,18 @@ export default function InteractiveMap({
     if (!mapInstanceRef.current || !routes || routes.length === 0) return;
     const activeRoute = routes.find((r) => r.id === selectedRouteId) || routes[0];
     if (activeRoute && activeRoute.coordinates.length > 0) {
+      mapInstanceRef.current.invalidateSize();
       const bounds = L.latLngBounds(activeRoute.coordinates);
       mapInstanceRef.current.fitBounds(bounds, { padding: [30, 30], maxZoom: 13 });
     }
   };
 
   return (
-    <div className="relative w-full h-[280px] xs:h-[320px] sm:h-[360px] md:h-[420px] lg:h-[480px] rounded-xl overflow-hidden border border-slate-200/80 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 shadow-soft transition-colors duration-200">
+    <div
+      className={`relative w-full h-[320px] xs:h-[350px] sm:h-[400px] md:h-[460px] lg:h-full lg:min-h-[510px] rounded-xl overflow-hidden border border-slate-200/80 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 shadow-soft transition-colors duration-200 ${
+        className || ''
+      }`}
+    >
       {/* Map DOM Container */}
       <div ref={mapContainerRef} className="w-full h-full" />
 

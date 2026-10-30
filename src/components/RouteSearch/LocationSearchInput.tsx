@@ -28,6 +28,7 @@ interface LocationSearchInputProps {
   isLoading: boolean;
   travelMode?: TravelMode;
   onSelectTravelMode?: (mode: TravelMode) => void;
+  className?: string;
 }
 
 export default function LocationSearchInput({
@@ -39,6 +40,7 @@ export default function LocationSearchInput({
   isLoading,
   travelMode = 'car',
   onSelectTravelMode,
+  className,
 }: LocationSearchInputProps) {
   // Text input state
   const [originQuery, setOriginQuery] = useState(origin?.name || '');
@@ -201,7 +203,11 @@ export default function LocationSearchInput({
     origin.id !== destination.id;
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 p-3.5 sm:p-5 shadow-soft">
+    <div
+      className={`bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 p-3.5 sm:p-5 shadow-soft transition-colors duration-200 ${
+        className || ''
+      }`}
+    >
       <div className="flex items-center justify-between mb-3">
         <h2 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
           <Compass className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
@@ -486,7 +492,7 @@ export default function LocationSearchInput({
       </div>
 
       {/* Quick Example Trips Across UP */}
-      <div className="mt-4 pt-3.5 border-t border-slate-100 dark:border-slate-800">
+      <div className="mt-auto pt-3.5 border-t border-slate-100 dark:border-slate-800">
         <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider block mb-2">
           Popular UP Travel Corridors
         </span>

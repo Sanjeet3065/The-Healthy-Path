@@ -80,6 +80,19 @@ export function getCategoryBadgeClass(category: PollutionReading['category']): s
 const pollutionCache = new Map<string, { reading: PollutionReading; time: number }>();
 const CACHE_TTL_MS = 10 * 60 * 1000;
 
+async function fetchWithTimeout(url: string, timeoutMs = 4500): Promise<Response> {
+  const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+  const timer = controller ? setTimeout(() => controller.abort(), timeoutMs) : null;
+  try {
+    const isSignal = controller?.signal && typeof (controller.signal as any).aborted === 'boolean';
+    return await fetch(url, isSignal && controller.signal instanceof Object ? { signal: controller.signal as any } : undefined);
+  } catch (e) {
+    throw e;
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
 /**
  * Batched retrieval of air quality readings along routes using Open-Meteo Air Quality API
  * (Copernicus Atmosphere Monitoring Service - CAMS European & Global Reanalysis).
@@ -122,7 +135,7 @@ export async function evaluateRoutesPollution(
       const lngs = pointsToFetch.map((p) => p.lng).join(',');
       const url = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lats}&longitude=${lngs}&current=pm10,pm2_5,nitrogen_dioxide,us_aqi`;
 
-      const resp = await fetch(url);
+      const resp = await fetchWithTimeout(url, 4500);
       if (resp.ok) {
         const data = await resp.json();
         const resultsArray = Array.isArray(data) ? data : [data];
@@ -340,7 +353,7 @@ export async function fetchStatewideAqiSnapshots(): Promise<CityAqiSnapshot[]> {
     const lngs = keyCities.map((c) => c.lng).join(',');
     const url = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lats}&longitude=${lngs}&current=pm10,pm2_5,nitrogen_dioxide,us_aqi`;
 
-    const resp = await fetch(url);
+    const resp = await fetchWithTimeout(url, 4500);
     if (resp.ok) {
       const data = await resp.json();
       const arr = Array.isArray(data) ? data : [data];
