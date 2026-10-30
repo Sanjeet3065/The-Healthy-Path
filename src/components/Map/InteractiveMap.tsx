@@ -373,25 +373,25 @@ export default function InteractiveMap({
   };
 
   return (
-    <div className="relative w-full h-[280px] sm:h-[360px] md:h-[420px] lg:h-[480px] rounded-xl overflow-hidden border border-slate-200/80 bg-slate-100 shadow-soft">
+    <div className="relative w-full h-[280px] sm:h-[360px] md:h-[420px] lg:h-[480px] rounded-xl overflow-hidden border border-slate-200/80 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 shadow-soft transition-colors duration-200">
       {/* Map DOM Container */}
       <div ref={mapContainerRef} className="w-full h-full" />
 
       {/* Floating Indicator (Top Left) */}
-      <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-[400] flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded-md bg-white/95 backdrop-blur-sm border border-slate-200/80 shadow-xs text-[10px] sm:text-[11px] font-semibold text-slate-800">
-        <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
+      <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-[400] flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded-md bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/80 dark:border-slate-700/80 shadow-xs text-[10px] sm:text-[11px] font-semibold text-slate-800 dark:text-slate-200">
+        <span className="w-2 h-2 rounded-full bg-emerald-600 dark:bg-emerald-500 animate-pulse" />
         <span>Uttar Pradesh</span>
       </div>
 
       {/* Floating Map Controls & Layer Switcher (Top Right) */}
       <div className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-[400] flex items-center gap-1 sm:gap-1.5">
-        <div className="flex items-center rounded-lg bg-white/95 border border-slate-200 shadow-xs p-0.5 text-[11px] sm:text-xs">
+        <div className="flex items-center rounded-lg bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-700 shadow-xs p-0.5 text-[11px] sm:text-xs">
           <button
             onClick={() => switchBaseLayer('osm')}
             className={`px-2 sm:px-2.5 py-1 rounded-md font-semibold transition-all ${
               activeBaseLayer === 'osm'
-                ? 'bg-emerald-700 text-white shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-emerald-700 dark:bg-emerald-600 text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             Street<span className="hidden sm:inline"> Map</span>
@@ -400,8 +400,8 @@ export default function InteractiveMap({
             onClick={() => switchBaseLayer('satellite')}
             className={`px-2 sm:px-2.5 py-1 rounded-md font-semibold transition-all ${
               activeBaseLayer === 'satellite'
-                ? 'bg-emerald-700 text-white shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-emerald-700 dark:bg-emerald-600 text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             Sat<span className="hidden sm:inline">ellite</span>
@@ -412,18 +412,18 @@ export default function InteractiveMap({
           onClick={handleFitRoute}
           disabled={routes.length === 0}
           title="Fit Route Bounds"
-          className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-lg bg-white/95 text-slate-700 border border-slate-200 shadow-xs text-xs font-medium hover:bg-slate-50 disabled:opacity-40 transition-colors"
+          className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-lg bg-white/95 dark:bg-slate-900/95 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shadow-xs text-xs font-medium hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-40 transition-colors"
         >
-          <Maximize2 className="h-3.5 w-3.5 text-slate-600" />
+          <Maximize2 className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
           <span className="hidden md:inline">Fit</span>
         </button>
 
         <button
           onClick={handleResetToUP}
           title="Reset to UP View"
-          className="p-1.5 rounded-lg bg-white/95 text-slate-700 border border-slate-200 shadow-xs text-xs hover:bg-slate-50 transition-colors"
+          className="p-1.5 rounded-lg bg-white/95 dark:bg-slate-900/95 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shadow-xs text-xs hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
         >
-          <RotateCcw className="h-3.5 w-3.5 text-slate-600" />
+          <RotateCcw className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
         </button>
       </div>
 
@@ -433,9 +433,9 @@ export default function InteractiveMap({
         <button
           type="button"
           onClick={() => setShowLegend(!showLegend)}
-          className="sm:hidden px-2.5 py-1.5 rounded-lg bg-white/95 border border-slate-200 shadow-xs text-[11px] font-semibold text-slate-700 flex items-center gap-1"
+          className="sm:hidden px-2.5 py-1.5 rounded-lg bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-700 shadow-xs text-[11px] font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-1"
         >
-          <Info className="h-3 w-3 text-emerald-600" />
+          <Info className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
           <span>Legend</span>
         </button>
 
@@ -443,34 +443,34 @@ export default function InteractiveMap({
         <div
           className={`${
             showLegend ? 'block' : 'hidden'
-          } sm:block mt-1 sm:mt-0 p-2.5 sm:p-3 rounded-lg bg-white/95 backdrop-blur-sm border border-slate-200 shadow-soft text-slate-700 max-w-[200px] sm:max-w-[220px] transition-all`}
+          } sm:block mt-1 sm:mt-0 p-2.5 sm:p-3 rounded-lg bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-soft text-slate-700 dark:text-slate-300 max-w-[200px] sm:max-w-[220px] transition-all`}
         >
-          <div className="font-semibold text-slate-900 mb-1.5 flex items-center justify-between">
+          <div className="font-semibold text-slate-900 dark:text-slate-100 mb-1.5 flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <Info className="h-3.5 w-3.5 text-emerald-600" />
+              <Info className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
               <span className="text-[11px] sm:text-xs">Map Legend</span>
             </div>
             <button
               onClick={() => setShowLegend(false)}
-              className="sm:hidden text-slate-400 hover:text-slate-600 text-[10px]"
+              className="sm:hidden text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-[10px]"
             >
               ✕
             </button>
           </div>
           <div className="space-y-1 sm:space-y-1.5 text-[10px] sm:text-[11px]">
             <div className="flex items-center gap-1.5">
-              <span className="w-3.5 h-1 rounded-full bg-emerald-600 shrink-0" />
+              <span className="w-3.5 h-1 rounded-full bg-emerald-600 dark:bg-emerald-500 shrink-0" />
               <span>Cleanest Route</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="w-3.5 h-1 rounded-full bg-slate-500 shrink-0" />
               <span>Alternative Path</span>
             </div>
-            <div className="flex items-center gap-1.5 pt-1 border-t border-slate-100">
+            <div className="flex items-center gap-1.5 pt-1 border-t border-slate-100 dark:border-slate-800">
               <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
               <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0" />
               <span className="w-2 h-2 rounded-full bg-red-500 shrink-0" />
-              <span className="text-slate-500">Sampled AQI Dots</span>
+              <span className="text-slate-500 dark:text-slate-400">Sampled AQI Dots</span>
             </div>
           </div>
         </div>

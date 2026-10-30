@@ -25,36 +25,36 @@ export default function Footer({ onSelectCorridor }: FooterProps) {
   };
 
   return (
-    <footer className="border-t border-slate-200/80 bg-white text-slate-600 mt-8 sm:mt-12">
+    <footer className="border-t border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-600 dark:text-slate-400 mt-8 sm:mt-12 transition-colors duration-200">
       <div className="container mx-auto px-3.5 sm:px-4 py-6 sm:py-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-start">
           {/* Brand & Purpose (5 cols) */}
           <div className="md:col-span-5 space-y-2.5">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-emerald-700 flex items-center justify-center text-white shadow-xs">
+              <div className="w-7 h-7 rounded-lg bg-emerald-700 dark:bg-emerald-600 flex items-center justify-center text-white shadow-xs">
                 <Leaf className="h-4 w-4" />
               </div>
-              <span className="font-display font-bold text-sm sm:text-base text-slate-900 tracking-tight">
+              <span className="font-display font-bold text-sm sm:text-base text-slate-900 dark:text-white tracking-tight">
                 The Healthy Path
               </span>
-              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
+              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60">
                 Uttar Pradesh
               </span>
             </div>
 
-            <p className="text-xs text-slate-500 max-w-sm leading-relaxed">
+            <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm leading-relaxed">
               Empowering commuters across Uttar Pradesh to make healthier travel choices by identifying routes with lower particulate exposure, real-time AQI, and atmospheric wind dispersal.
             </p>
 
-            <div className="flex items-center gap-2 pt-1 text-[11px] text-slate-400">
-              <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
+            <div className="flex items-center gap-2 pt-1 text-[11px] text-slate-400 dark:text-slate-500">
+              <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
               <span>Public Health & Clean Mobility Initiative</span>
             </div>
           </div>
 
           {/* Quick UP Corridors (4 cols) */}
           <div className="md:col-span-4 space-y-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-900 block">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200 block">
               Popular Travel Corridors
             </span>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
@@ -63,10 +63,10 @@ export default function Footer({ onSelectCorridor }: FooterProps) {
                   key={`${c.from}-${c.to}`}
                   type="button"
                   onClick={() => handleCorridorClick(c.from, c.to)}
-                  className="text-left text-xs px-2.5 py-1.5 rounded-md bg-slate-50 hover:bg-emerald-50 hover:text-emerald-800 border border-slate-200/70 text-slate-700 transition-colors flex items-center justify-between group"
+                  className="text-left text-xs px-2.5 py-1.5 rounded-md bg-slate-50 dark:bg-slate-900/90 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 hover:text-emerald-800 dark:hover:text-emerald-300 border border-slate-200/70 dark:border-slate-800 text-slate-700 dark:text-slate-300 dark:hover:border-emerald-800/60 transition-colors flex items-center justify-between group"
                 >
                   <span className="truncate">{c.from} → {c.to}</span>
-                  <ArrowUpRight className="h-3 w-3 text-slate-400 group-hover:text-emerald-700 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <ArrowUpRight className="h-3 w-3 text-slate-400 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </button>
               ))}
             </div>
@@ -74,10 +74,10 @@ export default function Footer({ onSelectCorridor }: FooterProps) {
 
           {/* Data Sources & Transparency (3 cols) */}
           <div className="md:col-span-3 space-y-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-900 block">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200 block">
               Atmospheric & Spatial Data
             </span>
-            <ul className="text-xs space-y-1.5 text-slate-500">
+            <ul className="text-xs space-y-1.5 text-slate-500 dark:text-slate-400">
               <li className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                 <span>Copernicus CAMS European Reanalysis</span>
@@ -99,7 +99,7 @@ export default function Footer({ onSelectCorridor }: FooterProps) {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-8 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-400 text-center sm:text-left">
+        <div className="mt-8 pt-4 border-t border-slate-100 dark:border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-400 dark:text-slate-500 text-center sm:text-left">
           <p>© {new Date().getFullYear()} The Healthy Path. Free & open environmental mobility tool for Uttar Pradesh.</p>
           <div className="flex items-center gap-1">
             <span>Built for clean travel across 75 UP districts</span>

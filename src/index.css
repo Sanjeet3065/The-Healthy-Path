@@ -57,33 +57,43 @@
   }
 
   .dark {
-    --background: 215 28% 10%;
-    --foreground: 210 20% 95%;
+    /* Sophisticated night slate palette — no harsh pitch-black */
+    --background: 222 47% 8%; /* #0b0f19 */
+    --foreground: 210 20% 98%; /* #f8fafc */
 
-    --card: 215 25% 13%;
-    --card-foreground: 210 20% 95%;
+    --card: 217 33% 12%; /* #131c2e */
+    --card-foreground: 210 20% 98%;
 
-    --popover: 215 25% 13%;
-    --popover-foreground: 210 20% 95%;
+    --popover: 217 33% 12%;
+    --popover-foreground: 210 20% 98%;
 
-    --primary: 158 75% 38%;
-    --primary-foreground: 215 28% 10%;
+    --primary: 158 75% 42%; /* #10b981 */
+    --primary-foreground: 222 47% 8%;
 
-    --secondary: 215 20% 18%;
+    --secondary: 215 25% 18%; /* #222f44 */
     --secondary-foreground: 210 20% 95%;
 
-    --muted: 215 20% 18%;
-    --muted-foreground: 215 15% 60%;
+    --muted: 215 25% 16%;
+    --muted-foreground: 215 15% 65%;
 
     --accent: 161 60% 18%;
     --accent-foreground: 158 75% 50%;
 
-    --destructive: 0 75% 55%;
+    --destructive: 0 72% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 215 20% 20%;
-    --input: 215 20% 20%;
-    --ring: 158 75% 38%;
+    --border: 217 25% 20%; /* #223048 */
+    --input: 217 25% 20%;
+    --ring: 158 75% 42%;
+
+    --sidebar-background: 222 47% 8%;
+    --sidebar-foreground: 210 20% 98%;
+    --sidebar-primary: 158 75% 42%;
+    --sidebar-primary-foreground: 222 47% 8%;
+    --sidebar-accent: 161 60% 18%;
+    --sidebar-accent-foreground: 158 75% 50%;
+    --sidebar-border: 217 25% 20%;
+    --sidebar-ring: 158 75% 42%;
   }
 }
 
@@ -92,9 +102,14 @@
     @apply border-border;
   }
 
+  html {
+    color-scheme: light dark;
+  }
+
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   h1, h2, h3, h4, .font-display {
@@ -124,9 +139,68 @@
   background: #ffffff !important;
 }
 
+/* Natural Dark Mode for Leaflet Map */
+.dark .leaflet-tile {
+  filter: brightness(0.68) invert(1) contrast(2.5) hue-rotate(200deg) saturate(0.28) brightness(0.88);
+}
+
+.dark .leaflet-container {
+  background: #0b0f19 !important;
+}
+
+.dark .leaflet-popup-content-wrapper {
+  background: #1e293b !important;
+  color: #f8fafc !important;
+  border: 1px solid #334155 !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dark .leaflet-popup-tip {
+  background: #1e293b !important;
+}
+
+.dark .leaflet-popup-content [style*="background: #f8fafc"],
+.dark .leaflet-popup-content [style*="background:#f8fafc"] {
+  background: #0f172a !important;
+  border-color: #334155 !important;
+}
+
+.dark .leaflet-popup-content [style*="color: #0f172a"],
+.dark .leaflet-popup-content [style*="color:#0f172a"] {
+  color: #f8fafc !important;
+}
+
+.dark .leaflet-popup-content [style*="color: #64748b"],
+.dark .leaflet-popup-content [style*="color:#64748b"] {
+  color: #94a3b8 !important;
+}
+
+.dark .leaflet-control-zoom a {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+.dark .leaflet-control-zoom a:hover {
+  background-color: #334155 !important;
+}
+
+.dark .leaflet-control-attribution {
+  background: rgba(15, 23, 42, 0.85) !important;
+  color: #94a3b8 !important;
+}
+
+.dark .leaflet-control-attribution a {
+  color: #34d399 !important;
+}
+
 /* Clean, purposeful shadows */
 .shadow-soft {
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.04);
+}
+
+.dark .shadow-soft {
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.25), 0 1px 2px -1px rgb(0 0 0 / 0.2);
 }
 
 .shadow-card {

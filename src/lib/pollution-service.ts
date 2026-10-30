@@ -62,17 +62,17 @@ export function getAqiCategory(aqi: number): PollutionReading['category'] {
 export function getCategoryBadgeClass(category: PollutionReading['category']): string {
   switch (category) {
     case 'Good':
-      return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+      return 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800/60';
     case 'Satisfactory':
-      return 'bg-teal-50 text-teal-700 border-teal-200';
+      return 'bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-300 border-teal-200 dark:border-teal-800/60';
     case 'Moderate':
-      return 'bg-amber-50 text-amber-700 border-amber-200';
+      return 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800/60';
     case 'Poor':
-      return 'bg-orange-50 text-orange-700 border-orange-200';
+      return 'bg-orange-50 dark:bg-orange-950/40 text-orange-700 dark:text-orange-300 border-orange-200 dark:border-orange-800/60';
     case 'Very Poor':
-      return 'bg-red-50 text-red-700 border-red-200';
+      return 'bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300 border-red-200 dark:border-red-800/60';
     case 'Severe':
-      return 'bg-purple-50 text-purple-700 border-purple-200';
+      return 'bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-800/60';
   }
 }
 

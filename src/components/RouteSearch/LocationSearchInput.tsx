@@ -201,20 +201,20 @@ export default function LocationSearchInput({
     origin.id !== destination.id;
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200/80 p-3.5 sm:p-5 shadow-soft">
+    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 p-3.5 sm:p-5 shadow-soft">
       <div className="flex items-center justify-between mb-3">
-        <h2 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
-          <Compass className="h-4 w-4 text-emerald-600" />
+        <h2 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+          <Compass className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
           <span>Plan Route</span>
         </h2>
-        <span className="text-[11px] sm:text-xs text-slate-400">Uttar Pradesh</span>
+        <span className="text-[11px] sm:text-xs text-slate-400 dark:text-slate-500">Uttar Pradesh</span>
       </div>
 
       {/* Travel Mode Selector (Feature: Commuter Calibration) */}
-      <div className="mb-3.5 p-1.5 rounded-lg bg-slate-50 border border-slate-200/80">
-        <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider px-1 mb-1 flex items-center justify-between">
+      <div className="mb-3.5 p-1.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/70">
+        <div className="text-[10px] font-semibold text-slate-400 dark:text-slate-400 uppercase tracking-wider px-1 mb-1 flex items-center justify-between">
           <span>Travel Mode</span>
-          <span className="text-[10px] text-slate-500 font-normal hidden sm:inline">Calibrates Inhalation</span>
+          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-normal hidden sm:inline">Calibrates Inhalation</span>
         </div>
         <div className="grid grid-cols-3 gap-1">
           <button
@@ -222,8 +222,8 @@ export default function LocationSearchInput({
             onClick={() => onSelectTravelMode?.('car')}
             className={`py-1.5 px-1 sm:px-2 rounded-md text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 sm:gap-1.5 transition-all ${
               travelMode === 'car'
-                ? 'bg-white text-emerald-800 shadow-xs border border-emerald-300 font-bold'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 border border-transparent'
+                ? 'bg-white dark:bg-slate-700/90 text-emerald-800 dark:text-emerald-300 shadow-xs border border-emerald-300 dark:border-emerald-500 font-bold'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-slate-700/50 border border-transparent'
             }`}
           >
             <Car className="h-3.5 w-3.5 shrink-0" />
@@ -235,8 +235,8 @@ export default function LocationSearchInput({
             onClick={() => onSelectTravelMode?.('bike')}
             className={`py-1.5 px-1 sm:px-2 rounded-md text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 sm:gap-1.5 transition-all ${
               travelMode === 'bike'
-                ? 'bg-white text-emerald-800 shadow-xs border border-emerald-300 font-bold'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 border border-transparent'
+                ? 'bg-white dark:bg-slate-700/90 text-emerald-800 dark:text-emerald-300 shadow-xs border border-emerald-300 dark:border-emerald-500 font-bold'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-slate-700/50 border border-transparent'
             }`}
           >
             <Bike className="h-3.5 w-3.5 shrink-0" />
@@ -248,15 +248,15 @@ export default function LocationSearchInput({
             onClick={() => onSelectTravelMode?.('bicycle')}
             className={`py-1.5 px-1 sm:px-2 rounded-md text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 sm:gap-1.5 transition-all ${
               travelMode === 'bicycle'
-                ? 'bg-white text-emerald-800 shadow-xs border border-emerald-300 font-bold'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 border border-transparent'
+                ? 'bg-white dark:bg-slate-700/90 text-emerald-800 dark:text-emerald-300 shadow-xs border border-emerald-300 dark:border-emerald-500 font-bold'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-slate-700/50 border border-transparent'
             }`}
           >
             <Activity className="h-3.5 w-3.5 shrink-0" />
             <span>Bicycle</span>
           </button>
         </div>
-        <div className="mt-1.5 px-1 text-[10px] sm:text-[11px] text-slate-500 flex items-center gap-1.5">
+        <div className="mt-1.5 px-1 text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
           {travelMode === 'car' && <span>Cabin air filter active • Lower direct PM exposure (0.8x)</span>}
           {travelMode === 'bike' && <span>Direct road dust & exhaust exposure (~1.25x inhalation)</span>}
@@ -268,10 +268,10 @@ export default function LocationSearchInput({
       <div className="space-y-3 relative">
         {/* Origin Field */}
         <div ref={originBoxRef} className="relative">
-          <label className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1 flex items-center justify-between">
+          <label className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1 flex items-center justify-between">
             <span>Starting Point (Origin)</span>
             {origin && (
-              <span className="text-[11px] font-medium text-emerald-600 flex items-center gap-1">
+              <span className="text-[11px] font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                 <CheckCircle2 className="h-3 w-3" /> UP Verified
               </span>
             )}
@@ -279,7 +279,7 @@ export default function LocationSearchInput({
 
           <div className="relative">
             <div className="absolute left-3.5 top-1/2 -translate-y-1/2 flex items-center pointer-events-none">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 ring-4 ring-emerald-100" />
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 ring-4 ring-emerald-100 dark:ring-emerald-950/80" />
             </div>
 
             <input
@@ -295,7 +295,7 @@ export default function LocationSearchInput({
                 if (originResults.length > 0) setShowOriginMenu(true);
               }}
               placeholder="e.g. Lucknow, Pipraich, Malihabad, Sector 18 Noida..."
-              className="w-full bg-slate-50/70 hover:bg-slate-50 focus:bg-white border border-slate-200 focus:border-emerald-600 rounded-lg pl-9 pr-9 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/15 transition-all"
+              className="w-full bg-slate-50/70 hover:bg-slate-50 focus:bg-white dark:bg-slate-800/60 dark:hover:bg-slate-800 dark:focus:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:border-emerald-600 dark:focus:border-emerald-400 rounded-lg pl-9 pr-9 py-2.5 text-base sm:text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-600/15 transition-all"
             />
 
             {isOriginSearching && (
@@ -310,7 +310,7 @@ export default function LocationSearchInput({
                   onSelectOrigin(null);
                   setOriginResults([]);
                 }}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 rounded-md"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 rounded-md"
               >
                 <X className="h-3.5 w-3.5" />
               </button>
@@ -319,7 +319,7 @@ export default function LocationSearchInput({
 
           {/* Origin Autocomplete Results Dropdown */}
           {showOriginMenu && originResults.length > 0 && (
-            <div className="absolute z-50 left-0 right-0 mt-1.5 bg-white rounded-lg border border-slate-200 shadow-hover max-h-60 overflow-y-auto divide-y divide-slate-100">
+            <div className="absolute z-50 left-0 right-0 mt-1.5 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 shadow-hover max-h-60 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800">
               {originResults.map((item) => (
                 <button
                   key={item.id}
@@ -333,21 +333,21 @@ export default function LocationSearchInput({
                   disabled={!item.isWithinUP}
                   className={`w-full text-left px-3.5 py-2.5 flex items-start gap-3 transition-colors ${
                     !item.isWithinUP
-                      ? 'opacity-60 bg-slate-50/80 cursor-not-allowed'
-                      : 'hover:bg-slate-50 cursor-pointer'
+                      ? 'opacity-60 bg-slate-50/80 dark:bg-slate-800/80 cursor-not-allowed'
+                      : 'hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer'
                   }`}
                 >
                   <div className="mt-0.5">{getLocationIcon(item.type)}</div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-slate-900 truncate">{item.name}</span>
-                      <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">
+                      <span className="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">{item.name}</span>
+                      <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
                         {item.type}
                       </span>
                     </div>
-                    <div className="text-xs text-slate-500 truncate mt-0.5">{item.displayName}</div>
+                    <div className="text-xs text-slate-500 dark:text-slate-400 truncate mt-0.5">{item.displayName}</div>
                     {!item.isWithinUP && (
-                      <div className="text-[11px] font-medium text-amber-700 flex items-center gap-1 mt-1">
+                      <div className="text-[11px] font-medium text-amber-700 dark:text-amber-400 flex items-center gap-1 mt-1">
                         <AlertCircle className="h-3 w-3" />
                         <span>Outside Uttar Pradesh state boundary</span>
                       </div>
@@ -365,7 +365,7 @@ export default function LocationSearchInput({
             type="button"
             onClick={handleSwap}
             title="Swap Origin and Destination"
-            className="p-1.5 rounded-full border border-slate-200 bg-white hover:bg-slate-50 hover:border-emerald-500 text-slate-600 hover:text-emerald-700 shadow-sm transition-all"
+            className="p-1.5 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-emerald-500 dark:hover:border-emerald-400 text-slate-600 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 shadow-sm transition-all"
           >
             <ArrowUpDown className="h-3.5 w-3.5" />
           </button>
@@ -373,10 +373,10 @@ export default function LocationSearchInput({
 
         {/* Destination Field */}
         <div ref={destBoxRef} className="relative">
-          <label className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1 flex items-center justify-between">
+          <label className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1 flex items-center justify-between">
             <span>Destination</span>
             {destination && (
-              <span className="text-[11px] font-medium text-emerald-600 flex items-center gap-1">
+              <span className="text-[11px] font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                 <CheckCircle2 className="h-3 w-3" /> UP Verified
               </span>
             )}
@@ -384,7 +384,7 @@ export default function LocationSearchInput({
 
           <div className="relative">
             <div className="absolute left-3.5 top-1/2 -translate-y-1/2 flex items-center pointer-events-none">
-              <span className="w-2.5 h-2.5 rounded-full bg-slate-800 ring-4 ring-slate-100" />
+              <span className="w-2.5 h-2.5 rounded-full bg-slate-800 dark:bg-slate-200 ring-4 ring-slate-100 dark:ring-slate-800" />
             </div>
 
             <input
@@ -400,7 +400,7 @@ export default function LocationSearchInput({
                 if (destResults.length > 0) setShowDestMenu(true);
               }}
               placeholder="e.g. Kanpur, Varanasi, Agra, Gorakhpur, Dalmau..."
-              className="w-full bg-slate-50/70 hover:bg-slate-50 focus:bg-white border border-slate-200 focus:border-emerald-600 rounded-lg pl-9 pr-9 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/15 transition-all"
+              className="w-full bg-slate-50/70 hover:bg-slate-50 focus:bg-white dark:bg-slate-800/60 dark:hover:bg-slate-800 dark:focus:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:border-emerald-600 dark:focus:border-emerald-400 rounded-lg pl-9 pr-9 py-2.5 text-base sm:text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-600/15 transition-all"
             />
 
             {isDestSearching && (
@@ -415,7 +415,7 @@ export default function LocationSearchInput({
                   onSelectDestination(null);
                   setDestResults([]);
                 }}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 rounded-md"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 rounded-md"
               >
                 <X className="h-3.5 w-3.5" />
               </button>
@@ -424,7 +424,7 @@ export default function LocationSearchInput({
 
           {/* Destination Autocomplete Results Dropdown */}
           {showDestMenu && destResults.length > 0 && (
-            <div className="absolute z-50 left-0 right-0 mt-1.5 bg-white rounded-lg border border-slate-200 shadow-hover max-h-60 overflow-y-auto divide-y divide-slate-100">
+            <div className="absolute z-50 left-0 right-0 mt-1.5 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 shadow-hover max-h-60 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800">
               {destResults.map((item) => (
                 <button
                   key={item.id}
@@ -438,21 +438,21 @@ export default function LocationSearchInput({
                   disabled={!item.isWithinUP}
                   className={`w-full text-left px-3.5 py-2.5 flex items-start gap-3 transition-colors ${
                     !item.isWithinUP
-                      ? 'opacity-60 bg-slate-50/80 cursor-not-allowed'
-                      : 'hover:bg-slate-50 cursor-pointer'
+                      ? 'opacity-60 bg-slate-50/80 dark:bg-slate-800/80 cursor-not-allowed'
+                      : 'hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer'
                   }`}
                 >
                   <div className="mt-0.5">{getLocationIcon(item.type)}</div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-slate-900 truncate">{item.name}</span>
-                      <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">
+                      <span className="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">{item.name}</span>
+                      <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
                         {item.type}
                       </span>
                     </div>
-                    <div className="text-xs text-slate-500 truncate mt-0.5">{item.displayName}</div>
+                    <div className="text-xs text-slate-500 dark:text-slate-400 truncate mt-0.5">{item.displayName}</div>
                     {!item.isWithinUP && (
-                      <div className="text-[11px] font-medium text-amber-700 flex items-center gap-1 mt-1">
+                      <div className="text-[11px] font-medium text-amber-700 dark:text-amber-400 flex items-center gap-1 mt-1">
                         <AlertCircle className="h-3 w-3" />
                         <span>Outside Uttar Pradesh state boundary</span>
                       </div>
@@ -468,7 +468,7 @@ export default function LocationSearchInput({
         <Button
           onClick={onSearchRoutes}
           disabled={!isFormValid || isLoading}
-          className="w-full mt-2 py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-sm rounded-lg shadow-sm transition-all flex items-center justify-center gap-2"
+          className="w-full mt-2 py-3 bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white font-semibold text-sm rounded-lg shadow-sm transition-all flex items-center justify-center gap-2"
         >
           {isLoading ? (
             <>
@@ -485,8 +485,8 @@ export default function LocationSearchInput({
       </div>
 
       {/* Quick Example Trips Across UP */}
-      <div className="mt-4 pt-3.5 border-t border-slate-100">
-        <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block mb-2">
+      <div className="mt-4 pt-3.5 border-t border-slate-100 dark:border-slate-800">
+        <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider block mb-2">
           Popular UP Travel Corridors
         </span>
         <div className="flex flex-wrap gap-1.5">
@@ -495,7 +495,7 @@ export default function LocationSearchInput({
               key={`${p.from}-${p.to}`}
               type="button"
               onClick={() => handleApplyPreset(p)}
-              className="text-xs px-2.5 py-1 rounded-md bg-slate-100 hover:bg-emerald-50 hover:text-emerald-800 border border-slate-200/80 text-slate-700 transition-colors"
+              className="text-xs px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800/90 hover:bg-emerald-50 dark:hover:bg-emerald-950/60 hover:text-emerald-800 dark:hover:text-emerald-300 border border-slate-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-300 transition-colors"
             >
               {p.from} → {p.to}
             </button>

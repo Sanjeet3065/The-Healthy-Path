@@ -166,7 +166,7 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/60 flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-50/60 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
       <Navbar />
 
       {/* Upgraded Compact Hero Section */}
@@ -174,8 +174,8 @@ export default function Index() {
 
       <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-5 sm:space-y-6 flex-1">
         {errorMsg && (
-          <div className="p-3.5 rounded-lg bg-red-50 border border-red-200 text-xs text-red-800 flex items-center gap-2">
-            <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
+          <div className="p-3.5 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/60 text-xs text-red-800 dark:text-red-300 flex items-center gap-2">
+            <AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400 flex-shrink-0" />
             <span>{errorMsg}</span>
           </div>
         )}
@@ -209,10 +209,10 @@ export default function Index() {
                   />
                 ) : (
                   !isLoading && (
-                    <div className="bg-white rounded-xl border border-slate-200/80 p-6 text-center shadow-soft">
-                      <Compass className="h-6 w-6 text-emerald-600 mx-auto mb-2" />
-                      <h3 className="text-xs font-bold text-slate-800 mb-1">Select Locations</h3>
-                      <p className="text-xs text-slate-500">
+                    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 p-6 text-center shadow-soft transition-colors duration-200">
+                      <Compass className="h-6 w-6 text-emerald-600 dark:text-emerald-400 mx-auto mb-2" />
+                      <h3 className="text-xs font-bold text-slate-800 dark:text-slate-100 mb-1">Select Locations</h3>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
                         Choose any starting point and destination in Uttar Pradesh to compare route pollution.
                       </p>
                     </div>
@@ -245,10 +245,10 @@ export default function Index() {
                   />
                 ) : (
                   !isLoading && (
-                    <div className="bg-white rounded-xl border border-slate-200/80 p-5 text-center shadow-soft">
-                      <Compass className="h-6 w-6 text-emerald-600 mx-auto mb-2" />
-                      <h3 className="text-xs font-bold text-slate-800 mb-1">Select Locations</h3>
-                      <p className="text-xs text-slate-500">
+                    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 p-5 text-center shadow-soft transition-colors duration-200">
+                      <Compass className="h-6 w-6 text-emerald-600 dark:text-emerald-400 mx-auto mb-2" />
+                      <h3 className="text-xs font-bold text-slate-800 dark:text-slate-100 mb-1">Select Locations</h3>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
                         Choose any starting point and destination in Uttar Pradesh to compare route pollution.
                       </p>
                     </div>
